@@ -1,0 +1,36 @@
+---
+
+- name: Check if wallet is exists
+  delegate_to: 'localhost'
+  become: False
+  ansible.builtin.stat:
+    path: '{{ neofs_storage__wallet }}'
+  register: wallet
+
+- name: Create local directory for wallets
+  delegate_to: 'localhost'
+  become: False
+  ansible.builtin.file:
+    path: '{{ neofs_storage__wallet | dirname }}'
+    state: 'directory'
+  when: not wallet.stat.exists
+
+- name: Create NeoFS Storage wallet
+  delegate_to: 'localhost'
+  become: False
+  ansible.builtin.command: >-
+    {{ neofs_storage__neofs_adm_cmd }} morph -c {{ neofs_storage__neofs_adm_config }} generate-storage-wallet
+    --storage-wallet {{ neofs_storage__wallet }}
+    --initial-gas {{ neofs_storage__initial_gas }}
+    --alphabet-wallets {{ neofs_storage__alphabet_wallets }}
+    --label empty
+  when: not wallet.stat.exists
+
+- name: Copy NeoFS Storage wallet
+  ansible.builtin.copy:
+    content: '{{ neofs_storage__wallet_struct | to_nice_json(ensure_ascii=False) }}'
+    dest: '{{ neofs_storage__wallet_path }}'
+    owner: 'root'
+    group: '{{ neofs_storage__group }}'
+    mode: '0640'
+  notify: [ 'Restart NeoFS Storage' ]

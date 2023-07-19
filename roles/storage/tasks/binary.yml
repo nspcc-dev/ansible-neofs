@@ -1,0 +1,17 @@
+---
+
+- name: Download NeoFS Storage binary
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.github
+  vars:
+    github__org: '{{ neofs_storage__github_org }}'
+    github__repo: '{{ neofs_storage__github_repo }}'
+    github__version: '{{ neofs_storage__version }}'
+    github__asset_name: '{{ neofs_storage__bin }}-{{ neofs_storage__arch }}'
+    github__args:
+      dest: '{{ neofs_storage__bin_path }}'
+      owner: 'root'
+      group: 'root'
+      mode: '0755'
+      force: yes
+    github__notify: [ 'Restart NeoFS Storage' ]

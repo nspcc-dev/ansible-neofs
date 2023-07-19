@@ -1,0 +1,74 @@
+---
+
+- name: Create NeoFS Storage user
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.system_user
+  vars:
+    system_user__user: '{{ neofs_storage__user }}'
+    system_user__group: '{{ neofs_storage__group }}'
+    system_user__home: '{{ neofs_storage__conf_dir }}'
+
+- name: Create configuration directory
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.mkprivdir
+  vars:
+    mkprivdir__dir: '{{ neofs_storage__conf_dir }}'
+    mkprivdir__group: '{{ neofs_storage__group }}'
+
+- name: Create data directory
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.mkprivdir
+  vars:
+    mkprivdir__dir: '{{ item }}'
+    mkprivdir__user: '{{ neofs_storage__user }}'
+    mkprivdir__group: '{{ neofs_storage__group }}'
+  loop: '{{ [ neofs_storage__data_dir ] + neofs_storage__datas }}'
+
+- name: Create meta directory
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.mkprivdir
+  vars:
+    mkprivdir__dir: '{{ item }}'
+    mkprivdir__user: '{{ neofs_storage__user }}'
+    mkprivdir__group: '{{ neofs_storage__group }}'
+  loop: '{{ neofs_storage__metas }}'
+
+- ansible.builtin.include_tasks: wallet.yml
+
+- ansible.builtin.include_tasks: tls.yml
+  when: neofs_storage__grpc_endpoints | community.general.json_query( '[? tls && enabled ]' ) | length
+
+- ansible.builtin.include_tasks: binary.yml
+  when: not neofs_storage__use_docker|bool and not neofs_storage__configure_only|bool
+
+- ansible.builtin.include_tasks: cli.yml
+  when: not neofs_storage__configure_only|bool
+
+- name: Copy NeoFS Storage config
+  ansible.builtin.template:
+    src: 'config.yml.j2'
+    dest: '{{ neofs_storage__config_path }}'
+    owner: 'root'
+    group: '{{ neofs_storage__group }}'
+    mode: '0640'
+  notify: [ 'Restart NeoFS Storage' ]
+
+- name: Copy systemd unit
+  ansible.builtin.template:
+    src: 'neofs-storage.service.j2'
+    dest: '/etc/systemd/system/neofs-storage{{ neofs_storage__instance }}.service'
+  notify: [ 'Restart NeoFS Storage' ]
+  when: not neofs_storage__use_docker|bool
+
+- ansible.builtin.include_tasks: docker.yml
+  when: neofs_storage__use_docker|bool
+
+- ansible.builtin.include_tasks: healthcheck.yml
+
+- name: Force debops.ferm run
+  ansible.builtin.include_role:
+    name: debops.debops.ferm
+  vars:
+    ferm__dependent_rules:
+      - '{{ neofs_storage__ferm__dependent_rules }}'
+  when: neofs_storage__debops_ferm_import|bool
