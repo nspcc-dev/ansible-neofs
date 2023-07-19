@@ -1,0 +1,44 @@
+---
+
+- name: Create NeoFS REST user
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.system_user
+  vars:
+    system_user__user: '{{ neofs_rest__user }}'
+    system_user__group: '{{ neofs_rest__group }}'
+    system_user__home: '{{ neofs_rest__conf_dir }}'
+
+- name: Create configuration directory
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.mkprivdir
+  vars:
+    mkprivdir__dir: '{{ neofs_rest__conf_dir }}'
+    mkprivdir__group: '{{ neofs_rest__group }}'
+
+- name: Copy NeoFS REST config
+  ansible.builtin.template:
+    src: 'config.yaml.j2'
+    dest: '{{ neofs_rest__conf_dir }}/config.yaml'
+    owner: 'root'
+    group: '{{ neofs_rest__group }}'
+    mode: '0640'
+  notify: [ 'Restart NeoFS REST service' ]
+
+- ansible.builtin.include_tasks: wallet.yml
+
+- ansible.builtin.include_tasks: binary.yml
+  when: neofs_rest__binaries_download|bool
+
+- name: Copy systemd unit
+  ansible.builtin.template:
+    src: 'neofs-rest.service.j2'
+    dest: '/etc/systemd/system/neofs-rest.service'
+  notify: [ 'Restart NeoFS REST service' ]
+
+- name: Force debops.ferm run
+  ansible.builtin.include_role:
+    name: debops.debops.ferm
+  vars:
+    ferm__dependent_rules:
+      - '{{ neofs_rest__ferm__dependent_rules }}'
+  when: neofs_rest__debops_ferm_import|bool

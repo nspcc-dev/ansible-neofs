@@ -1,0 +1,134 @@
+---
+
+neofs_rest__version: 'latest'
+
+neofs_rest__github_org: 'nspcc-dev'
+neofs_rest__github_repo: 'neofs-rest-gw'
+neofs_rest__github_asset_name: 'neofs-rest-gw-linux-amd64'
+
+# Flag to skip binaries download
+neofs_rest__binaries_download: True
+
+neofs_rest__user: 'neofs-rest'
+neofs_rest__group: 'neofs-rest'
+
+neofs_rest__conf_dir: '/etc/neofs/rest'
+neofs_rest__bin_path: '/usr/bin/neofs-rest-gw'
+
+neofs_rest__wallet_struct: ''
+neofs_rest__wallet_path: '{{ neofs_rest__conf_dir }}/wallet.json'
+neofs_rest__wallet_address: ''
+neofs_rest__wallet_password: ''
+
+neofs_rest__rest_address: 'localhost'
+neofs_rest__rest_port: 8880
+neofs_rest__rest_allow: []
+neofs_rest__rest_group_allow: []
+neofs_rest__rest_host_allow: []
+
+neofs_rest__prometheus_enabled: False
+neofs_rest__prometheus_address: 'localhost'
+neofs_rest__prometheus_port: 9941
+neofs_rest__prometheus_allow: []
+neofs_rest__prometheus_group_allow: []
+neofs_rest__prometheus_host_allow: []
+
+neofs_rest__pprof_enabled: False
+neofs_rest__pprof_address: 'localhost'
+neofs_rest__pprof_port: 9942
+neofs_rest__pprof_allow: []
+neofs_rest__pprof_group_allow: []
+neofs_rest__pprof_host_allow: []
+
+neofs_rest__pool_error_threshold: 100
+
+neofs_rest__node_dial_timeout: '5s'
+neofs_rest__healthcheck_timeout: '5s'
+neofs_rest__rebalance_timer: '30s'
+neofs_rest__scheme: '[ http ]'
+neofs_rest__cleanup_timeout: '10s'
+neofs_rest__graceful_timeout: '15s'
+neofs_rest__max_header_size: 1000000
+neofs_rest__listen_limit: 0
+neofs_rest__keep_alive: '1m'
+neofs_rest__read_timeout: '30s'
+neofs_rest__write_timeout: '30s'
+
+neofs_rest__raw_config:
+  logger:
+    level: info
+  wallet:
+    path: '{{ neofs_rest__wallet_path }}'
+    address: '{{ neofs_rest__wallet_address }}'
+    passphrase: '{{ neofs_rest__wallet_password }}'
+  listen-address: '{{ neofs_rest__rest_address | ansible.utils.ipwrap }}:{{ neofs_rest__rest_port }}'
+  pool-error-threshold: '{{ neofs_rest__pool_error_threshold }}'
+  node-dial-timeout: '{{ neofs_rest__node_dial_timeout }}'
+  healthcheck-timeout: '{{ neofs_rest__healthcheck_timeout }}'
+  rebalance-timer: '{{ neofs_rest__rebalance_timer }}'
+  scheme: '{{ neofs_rest__scheme }}'
+  cleanup-timeout: '{{ neofs_rest__cleanup_timeout }}'
+  graceful-timeout: '{{ neofs_rest__graceful_timeout }}'
+  max-header-size: '{{ neofs_rest__max_header_size }}'
+  listen-limit: '{{ neofs_rest__listen_limit }}'
+  keep-alive: '{{ neofs_rest__keep_alive }}'
+  read-timeout: '{{ neofs_rest__read_timeout }}'
+  write-timeout: '{{ neofs_rest__write_timeout }}'
+  peers:
+    0:
+      address: 'localhost:8080'
+      priority: 1
+      weight: 1
+
+neofs_rest__default_config:
+  - enabled: '{{ neofs_rest__pprof_enabled }}'
+    options:
+      pprof:
+        enabled: True
+        address: '{{ neofs_rest__pprof_address | ansible.utils.ipwrap }}:{{ neofs_rest__pprof_port }}'
+  - enabled: '{{ neofs_rest__prometheus_enabled }}'
+    options:
+      prometheus:
+        enabled: True
+        address: '{{ neofs_rest__prometheus_address | ansible.utils.ipwrap }}:{{ neofs_rest__prometheus_port }}'
+
+neofs_rest__config: []
+neofs_rest__group_config: []
+neofs_rest__host_config: []
+
+neofs_rest__combined_config: '{{ 
+  neofs_rest__default_config +
+  neofs_rest__config + 
+  neofs_rest__group_config +
+  neofs_rest__host_config }}'
+
+
+# debops.ferm force run via role import
+# May be useful when multiple instances with different firewall rules for each one are required
+neofs_rest__debops_ferm_import: False
+
+# firewall configuration to be applied with debops.ferm role
+neofs_rest__ferm__dependent_rules:
+  - type: 'accept'
+    name: 'neofs-rest{{ neofs_rest__instance }}_rest'
+    dport: [ '{{ neofs_rest__rest_port }}' ]
+    daddr: [ "{{ neofs_rest__rest_address }}{{ '/0' if neofs_rest__rest_address in ['0.0.0.0', '::0', '::'] }}" ]
+    saddr: '{{ neofs_rest__rest_allow + neofs_rest__rest_group_allow + neofs_rest__rest_host_allow }}'
+    protocol: 'tcp'
+    rule_state: 'present'
+
+  - type: 'accept'
+    name: 'neofs-rest{{ neofs_rest__instance }}_prometheus'
+    dport: [ '{{ neofs_rest__prometheus_port }}' ]
+    daddr: [ "{{ neofs_rest__prometheus_address }}{{ '/0' if neofs_rest__prometheus_address in ['0.0.0.0', '::0', '::'] }}" ]
+    saddr: '{{ neofs_rest__prometheus_allow + neofs_rest__prometheus_group_allow + neofs_rest__prometheus_host_allow }}'
+    protocol: 'tcp'
+    rule_state: "{{ 'present' if neofs_rest__prometheus_enabled else 'absent' }}"
+
+  - type: 'accept'
+    name: 'neofs-rest{{ neofs_rest__instance }}_pprof'
+    dport: [ '{{ neofs_rest__pprof_port }}' ]
+    daddr: [ "{{ neofs_rest__pprof_address }}{{ '/0' if neofs_rest__pprof_address in ['0.0.0.0', '::0', '::'] }}" ]
+    saddr: '{{ neofs_rest__pprof_allow + neofs_rest__pprof_group_allow + neofs_rest__pprof_host_allow }}'
+    protocol: 'tcp'
+    rule_state: "{{ 'present' if neofs_rest__pprof_enabled else 'absent' }}"

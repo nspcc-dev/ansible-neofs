@@ -1,0 +1,17 @@
+---
+
+- name: Download NeoFS REST binary
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.github
+  vars:
+    github__org: '{{ neofs_rest__github_org }}'
+    github__repo: '{{ neofs_rest__github_repo }}'
+    github__version: '{{ neofs_rest__version }}'
+    github__asset_name: '{{ neofs_rest__github_asset_name }}'
+    github__args:
+      dest: '{{ neofs_rest__bin_path }}'
+      owner: 'root'
+      group: 'root'
+      mode: '0755'
+      force: yes
+    github__notify: [ 'Restart NeoFS REST service' ]

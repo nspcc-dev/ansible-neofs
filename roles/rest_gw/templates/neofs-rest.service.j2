@@ -1,0 +1,18 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description=NeoFS REST Gateway
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStart={{ neofs_rest__bin_path }} --config {{ neofs_rest__conf_dir }}/config.yaml
+User={{ neofs_rest__user }}
+Group={{ neofs_rest__group }}
+WorkingDirectory={{ neofs_rest__conf_dir }}
+Restart=always
+RestartSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+---
+
+collections: [ 'nspcc.neofs' ]
+
+galaxy_info:
+  author: 'NSPCC Operations <ops@nspcc.ru>'
+  description: 'NeoFS REST Gateway'
+  company: 'NSPCC'
+  license: 'GPL-3.0-or-later'
+  min_ansible_version: '2.10.0'
+
+  platforms:
+    - name: Debian
+
+  galaxy_tags:
+    - neo
+    - neofs
+    - storage
+    - rest

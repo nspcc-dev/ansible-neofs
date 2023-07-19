@@ -1,0 +1,10 @@
+---
+
+- name: Copy NeoFS REST wallet
+  ansible.builtin.copy:
+    content: '{{ neofs_rest__wallet_struct | to_nice_json(ensure_ascii=False) }}'
+    dest: '{{ neofs_rest__wallet_path }}'
+    owner: 'root'
+    group: '{{ neofs_rest__group }}'
+    mode: '0640'
+  notify: [ 'Restart NeoFS REST service' ]
