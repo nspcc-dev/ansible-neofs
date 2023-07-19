@@ -1,0 +1,28 @@
+#
+
+namespace: 'nspcc'
+name: 'neofs'
+version: '0.0.1'
+description: 'NeoFS'
+authors:
+  - 'NSPCC Operations <ops@nspcc.ru>'
+
+repository: 'https://github.com/nspcc-dev/ansible-neofs'
+#documentation: ''
+homepage: 'https://github.com/nspcc-dev/ansible-neofs'
+issues: 'https://github.com/nspcc-dev/ansible-neofs/issues'
+
+readme: README.md
+
+license: [ 'GPL-3.0-or-later' ]
+
+tags:
+  - 'linux'
+  - 'neofs'
+  - 'storage'
+
+dependencies:
+  'ansible.utils': '*'
+  'community.general': '*'
+#  'nspcc.ansible-goodies': '*'
+  'git+https://github.com/nspcc-dev/ansible-goodies': '*'
