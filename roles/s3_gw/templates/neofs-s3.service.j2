@@ -1,0 +1,18 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description=NeoFS S3 Gateway
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStart={{ neofs_s3__bin_path }} --config {{ neofs_s3__conf_dir }}/config.yaml
+User={{ neofs_s3__user }}
+Group={{ neofs_s3__group }}
+WorkingDirectory={{ neofs_s3__conf_dir }}
+Restart=always
+RestartSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

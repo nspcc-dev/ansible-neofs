@@ -1,0 +1,79 @@
+---
+
+neofs_s3__version: 'latest'
+
+
+neofs_s3__github_org: 'nspcc-dev'
+neofs_s3__github_repo: 'neofs-s3-gw'
+
+neofs_s3__gw_github_asset_name: 'neofs-s3-gw-linux-amd64'
+neofs_s3__auth_github_asset_name: 'neofs-s3-authmate-linux-amd64'
+
+# Flag to skip binaries download
+neofs_s3__configure_only: False
+
+neofs_s3__user: 'neofs-s3'
+neofs_s3__group: 'neofs-s3'
+
+neofs_s3__conf_dir: '/etc/neofs/s3'
+neofs_s3__bin_path: '/usr/bin/neofs-s3-gw'
+neofs_s3__auth_bin_path: '/usr/bin/neofs-s3-authmate'
+
+neofs_s3__wallet_struct: ''
+neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
+
+neofs_s3__s3_address: '::'
+neofs_s3__s3_port: 8084
+
+neofs_s3__prometheus_enabled: False
+neofs_s3__prometheus_address: 'localhost'
+neofs_s3__prometheus_port: 9931
+
+neofs_s3__pprof_enabled: False
+neofs_s3__pprof_address: 'localhost'
+neofs_s3__pprof_port: 9932
+
+neofs_s3__pool_error_threshold: 100
+
+# Flag to skip binaries download in case of False
+neofs_s3__configure_only: False
+
+
+neofs_s3__raw_config:
+  logger:
+    level: info
+  wallet:
+    path: '{{ neofs_s3__wallet_path }}'
+    passphrase: ''
+    address: ''
+  server:
+    - address: '{{ neofs_s3__s3_address | ansible.utils.ipwrap }}:{{ neofs_s3__s3_port }}'
+  rpc_endpoint: 'http://localhost:40332'
+  pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}' 
+  peers:
+    0:
+      address: 'localhost:8080'
+      priority: 1
+      weight: 1
+
+neofs_s3__default_config: 
+  - enabled: '{{ neofs_s3__pprof_enabled }}'
+    options:
+      pprof:
+        enabled: True
+        address: '{{ neofs_s3__pprof_address | ansible.utils.ipwrap }}:{{ neofs_s3__pprof_port }}'
+  - enabled: '{{ neofs_s3__prometheus_enabled }}'
+    options:
+      prometheus:
+        enabled: True
+        address: '{{ neofs_s3__prometheus_address | ansible.utils.ipwrap }}:{{ neofs_s3__prometheus_port }}'
+
+neofs_s3__config: []
+neofs_s3__group_config: []
+neofs_s3__host_config: []
+
+neofs_s3__combined_config: '{{
+  neofs_s3__default_config +
+  neofs_s3__config +
+  neofs_s3__group_config +
+  neofs_s3__host_config }}'

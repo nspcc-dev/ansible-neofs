@@ -1,0 +1,38 @@
+---
+
+- name: Create NeoFS S3 user
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.system_user
+  vars:
+    system_user__user: '{{ neofs_s3__user }}'
+    system_user__group: '{{ neofs_s3__group }}'
+    system_user__home: '{{ neofs_s3__conf_dir }}'
+
+- name: Create configuration directory
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.mkprivdir
+  vars:
+    mkprivdir__dir: '{{ neofs_s3__conf_dir }}'
+    mkprivdir__group: '{{ neofs_s3__group }}'
+
+- name: Copy NeoFS S3 config
+  ansible.builtin.template:
+    src: 'config.yaml.j2'
+    dest: '{{ neofs_s3__conf_dir }}/config.yaml'
+    owner: 'root'
+    group: '{{ neofs_s3__group }}'
+    mode: '0640'
+  notify: [ 'Restart NeoFS S3 service' ]
+
+- ansible.builtin.include_tasks: wallet.yml
+
+- ansible.builtin.include_tasks: binary.yml
+  when: not neofs_s3__configure_only|bool
+
+- ansible.builtin.include_tasks: auth_pregen.yml
+
+- name: Copy systemd unit
+  ansible.builtin.template:
+    src: 'neofs-s3.service.j2'
+    dest: '/etc/systemd/system/neofs-s3.service'
+  notify: [ 'Restart NeoFS S3 service' ]
