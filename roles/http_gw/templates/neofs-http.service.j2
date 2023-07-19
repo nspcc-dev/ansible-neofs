@@ -1,0 +1,18 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description=NeoFS HTTP Gateway
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStart={{ neofs_http__bin_path }} --config {{ neofs_http__conf_dir }}/config.yaml
+User={{ neofs_http__user }}
+Group={{ neofs_http__group }}
+WorkingDirectory={{ neofs_http__conf_dir }}
+Restart=always
+RestartSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
