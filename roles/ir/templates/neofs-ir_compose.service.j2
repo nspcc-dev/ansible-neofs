@@ -1,0 +1,16 @@
+{{ ansible_managed | comment }}
+
+[Unit]
+Description=NeoFS InnerRing{{ neofs_ir__instance }} node in Docker
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/docker-compose up
+ExecStop=/usr/bin/docker-compose down
+Restart=always
+WorkingDirectory={{ neofs_ir__conf_dir }}
+
+[Install]
+WantedBy=multi-user.target

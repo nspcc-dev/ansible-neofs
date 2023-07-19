@@ -1,0 +1,17 @@
+---
+
+- name: Restart NeoFS IR service
+  ansible.builtin.systemd:
+    name: 'neofs-ir{{ neofs_ir__instance }}.service'
+    state: 'restarted'
+    enabled: yes
+    daemon_reload: yes
+
+- name: Waiting for node up
+  ansible.builtin.shell:
+    cmd: '{{ neofs_ir__cli_bin_path }} control healthcheck -c {{ neofs_ir__control_api_config_path }} --ir'
+  changed_when: False
+  register: _neofs_ir_check_result
+  until: _neofs_ir_check_result.rc == 0
+  retries: 10
+  delay: 30

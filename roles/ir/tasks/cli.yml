@@ -1,0 +1,16 @@
+---
+
+- name: Download NeoFS CLI binary
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.github
+  vars:
+    github__org: '{{ neofs_ir__github_org }}'
+    github__repo: '{{ neofs_ir__github_repo }}'
+    github__version: '{{ neofs_ir__version }}'
+    github__asset_name: '{{ neofs_ir__cli_bin }}-{{ neofs_ir__arch }}'
+    github__args:
+      dest: '{{ neofs_ir__cli_bin_path }}'
+      owner: 'root'
+      group: 'root'
+      mode: '0755'
+      force: yes

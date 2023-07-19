@@ -1,0 +1,64 @@
+---
+
+- name: Create NeoFS IR user
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.system_user
+  vars:
+    system_user__user: '{{ neofs_ir__user }}'
+    system_user__group: '{{ neofs_ir__group }}'
+    system_user__home: '{{ neofs_ir__conf_dir }}'
+
+- name: Create configuration directory
+  ansible.builtin.include_role:
+    name: nspcc.ansible_goodies.mkprivdir
+  vars:
+    mkprivdir__dir: '{{ neofs_ir__conf_dir }}'
+    mkprivdir__group: '{{ neofs_ir__group }}'
+
+- name: Create data directory
+  ansible.builtin.file:
+    state: directory
+    path: '{{ neofs_ir__data_dir }}'
+    owner: '{{ neofs_ir__user }}'
+    group: '{{ neofs_ir__group }}'
+    mode: '0750'
+
+- ansible.builtin.include_tasks: wallet.yml
+
+- ansible.builtin.include_tasks: tls.yml
+  when: neofs_ir__blockchain_tls_rpc_enabled|bool
+
+- name: Copy NeoFS IR config
+  ansible.builtin.template:
+    src: 'config.yml.j2'
+    dest: '{{ neofs_ir__config_path }}'
+    owner: 'root'
+    group: '{{ neofs_ir__group }}'
+    mode: '0640'
+  notify: [ 'Restart NeoFS IR' ]
+
+- ansible.builtin.include_tasks: binary.yml
+  when: not neofs_ir__use_docker|bool and not neofs_ir__configure_only|bool
+
+- ansible.builtin.include_tasks: cli.yml
+  when: not neofs_ir__configure_only|bool
+
+- name: Copy systemd unit
+  ansible.builtin.template:
+    src: 'neofs-ir.service.j2'
+    dest: '/etc/systemd/system/neofs-ir{{ neofs_ir__instance }}.service'
+  notify: [ 'Restart NeoFS IR' ]
+  when: not neofs_ir__use_docker|bool
+
+- ansible.builtin.include_tasks: docker.yml
+  when: neofs_ir__use_docker|bool
+
+- ansible.builtin.include_tasks: healthcheck.yml
+
+- name: Force debops.ferm run
+  ansible.builtin.include_role:
+    name: debops.debops.ferm
+  vars:
+    ferm__dependent_rules:
+      - '{{ neofs_ir__ferm__dependent_rules }}'
+  when: neofs_ir__debops_ferm_import|bool

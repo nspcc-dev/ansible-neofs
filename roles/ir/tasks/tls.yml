@@ -1,0 +1,19 @@
+---
+
+- name: Copy TLS certificate for Internal Consensus RPC node
+  ansible.builtin.copy:
+    src: '{{ neofs_ir__blockchain_tls_rpc_local_cert }}'
+    dest: '{{ neofs_ir__blockchain_tls_rpc_cert }}'
+    owner: 'root'
+    group: '{{ neofs_ir__group }}'
+    mode: '0640'
+  notify: [ 'Restart NeoFS IR' ]
+
+- name: Copy TLS key for Internal Consensus RPC node
+  ansible.builtin.copy:
+    src: '{{ neofs_ir__blockchain_tls_rpc_local_key }}'
+    dest: '{{ neofs_ir__blockchain_tls_rpc_key }}'
+    owner: 'root'
+    group: '{{ neofs_ir__group }}'
+    mode: '0640'
+  notify: [ 'Restart NeoFS IR' ]

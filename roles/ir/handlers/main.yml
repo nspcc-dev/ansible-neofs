@@ -1,0 +1,4 @@
+---
+
+- name: Restart NeoFS IR
+  ansible.builtin.include_tasks: restart.yml

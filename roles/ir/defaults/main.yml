@@ -1,0 +1,270 @@
+---
+
+neofs_ir__version: 'latest'
+
+neofs_ir__github_org: 'nspcc-dev'
+neofs_ir__github_repo: 'neofs-node'
+
+neofs_ir__bin: 'neofs-ir'
+neofs_ir__cli_bin: 'neofs-cli'
+neofs_ir__arch: 'amd64'
+
+neofs_ir__locodedb_version: 'latest'
+neofs_ir__locodedb_github_repo: 'neofs-locode-db'
+neofs_ir__locodedb: 'locode_db'
+
+# Flag to skip binaries download
+neofs_ir__configure_only: False
+
+neofs_ir__docker_image: 'nspccdev/neofs-ir:{{ neofs_ir__version }}'
+neofs_ir__use_docker: False
+
+# Instance name to have multiple NeoFS nodes on the same host
+neofs_ir__instance: ''
+
+neofs_ir__user: 'neofs-ir{{ neofs_ir__instance }}'
+neofs_ir__group: 'neofs-ir{{ neofs_ir__instance }}'
+
+neofs_ir__conf_dir: '/etc/neofs/ir{{ neofs_ir__instance }}'
+neofs_ir__config_path: '{{ neofs_ir__conf_dir }}/config.yml'
+neofs_ir__bin_path: '/usr/bin/neofs-ir'
+neofs_ir__cli_bin_path: '/usr/bin/neofs-cli'
+neofs_ir__locodedb_path: '{{ neofs_ir__data_dir }}/locode.db'
+neofs_ir__control_api_config_path: '{{ neofs_ir__conf_dir }}/control.yml'
+
+# Directory for databases and processing results
+neofs_ir__data_dir: '/var/lib/neofs/ir{{ neofs_ir__instance }}'
+
+neofs_ir__wallet_struct: ''
+neofs_ir__wallet_path: '{{ neofs_ir__conf_dir }}/wallet.json'
+neofs_ir__wallet_address: ''
+neofs_ir__wallet_password: ''
+
+neofs_ir__control_enabled: True
+neofs_ir__control_address: 'localhost'
+neofs_ir__control_port: 8090
+neofs_ir__control_allow: []
+neofs_ir__control_group_allow: []
+neofs_ir__control_host_allow: []
+
+neofs_ir__prometheus_enabled: False
+neofs_ir__prometheus_address: 'localhost'
+neofs_ir__prometheus_port: 9901
+neofs_ir__prometheus_allow: []
+neofs_ir__prometheus_group_allow: []
+neofs_ir__prometheus_host_allow: []
+
+neofs_ir__pprof_enabled: False
+neofs_ir__pprof_address: 'localhost'
+neofs_ir__pprof_port: 9902
+neofs_ir__pprof_allow: []
+neofs_ir__pprof_group_allow: []
+neofs_ir__pprof_host_allow: []
+
+neofs_ir__blockchain_database_path: '{{ neofs_ir__data_dir }}/morph.bolt'
+neofs_ir__blockchain_notary_disabled: False
+neofs_ir__blockchain_time_per_block: '15s'
+neofs_ir__blockchain_magic: '1'
+neofs_ir__blockchain_seed_nodes: []
+
+neofs_ir__blockchain_rpc_address: '::'
+neofs_ir__blockchain_rpc_port: 30333
+neofs_ir__blockchain_rpc_allow: []
+neofs_ir__blockchain_rpc_group_allow: []
+neofs_ir__blockchain_rpc_host_allow: []
+neofs_ir__blockchain_rpc_addresses: [ '{{ neofs_ir__blockchain_rpc_address | ansible.utils.ipwrap }}:{{ neofs_ir__blockchain_rpc_port }}' ]
+
+neofs_ir__blockchain_tls_rpc_enabled: False
+neofs_ir__blockchain_tls_rpc_address: '::'
+neofs_ir__blockchain_tls_rpc_port: 30335
+neofs_ir__blockchain_tls_rpc_allow: []
+neofs_ir__blockchain_tls_rpc_group_allow: []
+neofs_ir__blockchain_tls_rpc_host_allow: []
+neofs_ir__blockchain_tls_rpc_addresses: [ '{{ neofs_ir__blockchain_tls_rpc_address | ansible.utils.ipwrap }}:{{ neofs_ir__blockchain_tls_rpc_port }}' ]
+neofs_ir__blockchain_tls_rpc_cert: '{{ neofs_ir__conf_dir }}/server.crt'
+neofs_ir__blockchain_tls_rpc_key: '{{ neofs_ir__conf_dir }}/server.key'
+neofs_ir__blockchain_tls_rpc_local_cert: '/local/path/to/cert'
+neofs_ir__blockchain_tls_rpc_local_key: '/local/path/to/key'
+
+neofs_ir__blockchain_p2p_address: '::'
+neofs_ir__blockchain_p2p_port: 20333
+neofs_ir__blockchain_p2p_allow: []
+neofs_ir__blockchain_p2p_group_allow: []
+neofs_ir__blockchain_p2p_host_allow: []
+neofs_ir__blockchain_p2p_addresses: [ '{{ neofs_ir__blockchain_p2p_address | ansible.utils.ipwrap }}:{{ neofs_ir__blockchain_p2p_port }}' ]
+
+neofs_ir__validators: []
+neofs_ir__consensus_committee: []
+neofs_ir__mainnet_endpoints: []
+neofs_ir__morph_endpoints: [ 'ws://localhost:40332/ws' ]
+
+neofs_ir__external_sidechain: False
+neofs_ir__sidechain_config:
+    magic: '{{ neofs_ir__blockchain_magic }}'
+    committee: '{{ neofs_ir__consensus_committee }}'
+    storage:
+      type: boltdb
+      path: '{{ neofs_ir__blockchain_database_path }}'
+    notary_disabled: '{{ neofs_ir__blockchain_notary_disabled }}'
+    time_per_block: '{{ neofs_ir__blockchain_time_per_block }}'
+    seed_nodes: '{{ neofs_ir__blockchain_seed_nodes }}'
+    rpc:
+      listen: '{{ neofs_ir__blockchain_rpc_addresses }}'
+    p2p:
+      listen: '{{ neofs_ir__blockchain_p2p_addresses }}'
+      peers: { min: 2 }
+
+
+neofs_ir__raw_config:
+  logger:
+    level: info
+
+  wallet:
+    path: '{{ neofs_ir__wallet_path }}'
+    address: '{{ neofs_ir__wallet_address }}'
+    password: '{{ neofs_ir__wallet_password }}'
+
+  node:
+    persistent_state:
+      path: '{{ neofs_ir__data_dir }}/state'
+
+  locode:
+    db:
+      path: '{{ neofs_ir__locodedb_path }}'
+
+  fee:
+    main_chain: 25000000
+    side_chain: 500000000
+  timers:
+    emit: 240
+  emit:
+    storage:
+      amount: 400000000
+    gas:
+      balance_threshold: 100000000000
+  audit:
+    pdp:
+      max_sleep_interval: 500ms
+  workers:
+    netmap: 100
+    balance: 100
+    neofs: 100
+    container: 100
+    alphabet: 100
+
+
+neofs_ir__default_config:
+  - enabled: '{{ neofs_ir__mainnet_endpoints }}'
+    options:
+      mainnet:
+        endpoints: '{{ neofs_ir__mainnet_endpoints }}'
+
+  - enabled: '{{ neofs_ir__external_sidechain }}'
+    options:
+      morph:
+        endpoints: '{{ neofs_ir__morph_endpoints }}'
+
+  - enabled: '{{ neofs_ir__validators }}'
+    options:
+      morph:
+        validators: '{{ neofs_ir__validators }}'
+
+  - enabled: '{{ not neofs_ir__external_sidechain }}'
+    options:
+      morph:
+        consensus: '{{ neofs_ir__sidechain_config }}'
+
+  - enabled: '{{ neofs_ir__control_enabled }}'
+    options:
+      control:
+        grpc:
+          endpoint: '{{ neofs_ir__control_address | ansible.utils.ipwrap }}:{{ neofs_ir__control_port }}'
+
+  - enabled: '{{ neofs_ir__prometheus_enabled }}'
+    options:
+      prometheus:
+        enabled: True
+        address: '{{ neofs_ir__prometheus_address | ansible.utils.ipwrap }}:{{ neofs_ir__prometheus_port }}'
+
+  - enabled: '{{ neofs_ir__pprof_enabled }}'
+    options:
+      pprof:
+        enabled: True
+        address: '{{ neofs_ir__pprof_address | ansible.utils.ipwrap }}:{{ neofs_ir__pprof_port }}'
+
+  - enabled: '{{ neofs_ir__blockchain_tls_rpc_enabled }}'
+    options:
+      morph:
+        consensus:
+          rpc:
+            tls:
+              enabled: True
+              listen: '{{ neofs_ir__blockchain_tls_rpc_addresses }}'
+              cert_file: '{{ neofs_ir__blockchain_tls_rpc_cert }}'
+              key_file: '{{ neofs_ir__blockchain_tls_rpc_key }}'
+
+neofs_ir__config: []
+neofs_ir__group_config: []
+neofs_ir__host_config: []
+
+neofs_ir__combined_config: '{{
+  neofs_ir__default_config +
+  neofs_ir__config +
+  neofs_ir__group_config +
+  neofs_ir__host_config }}'
+
+
+# Force debops.ferm run via role import
+# May be useful when you need to have multiple instances with different
+# firewall rules for each one.
+neofs_ir__debops_ferm_import: False
+
+# firewall configuration to be applied with debops.ferm role
+neofs_ir__ferm__dependent_rules:
+  - type: 'accept'
+    name: 'neofs-ir{{ neofs_ir__instance }}_prometheus'
+    dport: [ '{{ neofs_ir__prometheus_port }}' ]
+    daddr: [ "{{ neofs_ir__prometheus_address }}{{ '/0' if neofs_ir__prometheus_address in ['0.0.0.0', '::0', '::'] }}" ]
+    saddr: '{{ neofs_ir__prometheus_allow + neofs_ir__prometheus_group_allow + neofs_ir__prometheus_host_allow }}'
+    protocol: 'tcp'
+    rule_state: "{{ 'present' if neofs_ir__prometheus_enabled else 'absent' }}"
+
+  - type: 'accept'
+    name: 'neofs-ir{{ neofs_ir__instance }}_pprof'
+    dport: [ '{{ neofs_ir__pprof_port }}' ]
+    daddr: [ "{{ neofs_ir__pprof_address }}{{ '/0' if neofs_ir__pprof_address in ['0.0.0.0', '::0', '::'] }}" ]
+    saddr: '{{ neofs_ir__pprof_allow + neofs_ir__pprof_group_allow + neofs_ir__pprof_host_allow }}'
+    protocol: 'tcp'
+    rule_state: "{{ 'present' if neofs_ir__pprof_enabled else 'absent' }}"
+
+  - type: 'accept'
+    name: 'neofs-ir{{ neofs_ir__instance }}_control'
+    dport: [ '{{ neofs_ir__control_port }}' ]
+    daddr: [ "{{ neofs_ir__control_address }}{{ '/0' if neofs_ir__control_address in ['0.0.0.0', '::0', '::'] }}" ]
+    saddr: '{{ neofs_ir__control_allow + neofs_ir__control_group_allow + neofs_ir__control_host_allow }}'
+    protocol: 'tcp'
+    rule_state: "{{ 'present' if neofs_ir__control_enabled else 'absent' }}"
+
+  - type: 'accept'
+    name: 'neofs-ir{{ neofs_ir__instance }}_blockchain_rpc'
+    dport: [ '{{ neofs_ir__blockchain_rpc_port }}' ]
+    daddr: [ "{{ neofs_ir__blockchain_rpc_address }}{{ '/0' if neofs_ir__blockchain_rpc_address in ['0.0.0.0', '::0', '::'] }}" ]
+    saddr: '{{ neofs_ir__blockchain_rpc_allow + neofs_ir__blockchain_rpc_group_allow + neofs_ir__blockchain_rpc_host_allow }}'
+    protocol: 'tcp'
+    rule_state: "{{ 'present' if not neofs_ir__external_sidechain else 'absent' }}"
+
+  - type: 'accept'
+    name: 'neofs-ir{{ neofs_ir__instance }}_blockchain_tls_rpc'
+    dport: [ '{{ neofs_ir__blockchain_tls_rpc_port }}' ]
+    daddr: [ "{{ neofs_ir__blockchain_tls_rpc_address }}{{ '/0' if neofs_ir__blockchain_tls_rpc_address in ['0.0.0.0', '::0', '::'] }}" ]
+    saddr: '{{ neofs_ir__blockchain_tls_rpc_allow + neofs_ir__blockchain_tls_rpc_group_allow + neofs_ir__blockchain_tls_rpc_host_allow }}'
+    protocol: 'tcp'
+    rule_state: "{{ 'present' if neofs_ir__blockchain_tls_rpc_enabled else 'absent' }}"
+
+  - type: 'accept'
+    name: 'neofs-ir{{ neofs_ir__instance }}_blockchain_p2p'
+    dport: [ '{{ neofs_ir__blockchain_p2p_port }}' ]
+    daddr: [ "{{ neofs_ir__blockchain_p2p_address }}{{ '/0' if neofs_ir__blockchain_p2p_address in ['0.0.0.0', '::0', '::'] }}" ]
+    saddr: '{{ neofs_ir__blockchain_p2p_allow + neofs_ir__blockchain_p2p_group_allow + neofs_ir__blockchain_p2p_host_allow }}'
+    protocol: 'tcp'
+    rule_state: "{{ 'present' if not neofs_ir__external_sidechain else 'absent' }}"
