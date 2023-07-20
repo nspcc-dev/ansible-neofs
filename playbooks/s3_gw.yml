@@ -1,0 +1,13 @@
+---
+
+- name: 'NeoFS S3 GW'
+  collections: [ 'nspcc.neofs' ]
+  hosts: [ 'neofs_s3_gw' ]
+  become: True
+  gather_facts: False
+  environment: '{{ inventory__environment | d({})
+                   | combine(inventory__group_environment | d({}))
+                   | combine(inventory__host_environment  | d({})) }}'
+  roles:
+    - role: s3-gw
+      tags: [ 'role::neofs-s3-gw', 'skip::neofs-s3-gw' ]

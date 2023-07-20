@@ -1,0 +1,14 @@
+---
+
+- name: 'NeoFS IR'
+  collections: [ 'nspcc.neofs' ]
+  hosts: [ 'neofs_ir' ]
+  become: True
+# serial: 1
+  gather_facts: False
+  environment: '{{ inventory__environment | d({})
+                   | combine(inventory__group_environment | d({}))
+                   | combine(inventory__host_environment  | d({})) }}'
+  roles:
+    - role: ir
+      tags: [ 'role::neofs-ir', 'skip::neofs-ir' ]

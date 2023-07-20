@@ -1,0 +1,14 @@
+---
+
+- name: 'NeoFS Storage'
+  collections: [ 'nspcc.neofs' ]
+  hosts: [ 'neofs_storage' ]
+  become: True
+#  serial: 1
+  gather_facts: False
+  environment: '{{ inventory__environment | d({})
+                   | combine(inventory__group_environment | d({}))
+                   | combine(inventory__host_environment  | d({})) }}'
+  roles:
+    - role: storage
+      tags: [ 'role::neofs-storage', 'skip::neofs-storage' ]

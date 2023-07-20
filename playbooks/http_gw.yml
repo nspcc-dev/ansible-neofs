@@ -1,0 +1,14 @@
+---
+
+- name: 'NeoFS HTTP GW'
+  collections: [ 'nspcc.neofs' ]
+  hosts: [ 'neofs_http_gw' ]
+  become: True
+
+  gather_facts: False
+  environment: '{{ inventory__environment | d({})
+                   | combine(inventory__group_environment | d({}))
+                   | combine(inventory__host_environment  | d({})) }}'
+  roles:
+    - role: http-gw
+      tags: [ 'role::neofs-http-gw', 'skip::neofs-http-gw' ]

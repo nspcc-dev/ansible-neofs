@@ -1,0 +1,6 @@
+---
+
+- ansible.builtin.import_playbook: ir.yml
+- ansible.builtin.import_playbook: storage.yml
+- ansible.builtin.import_playbook: s3_gw.yml
+- ansible.builtin.import_playbook: http_gw.yml
