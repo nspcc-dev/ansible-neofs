@@ -55,10 +55,5 @@
 
 - ansible.builtin.include_tasks: healthcheck.yml
 
-- name: Force debops.ferm run
-  ansible.builtin.include_role:
-    name: debops.debops.ferm
-  vars:
-    ferm__dependent_rules:
-      - '{{ neofs_ir__ferm__dependent_rules }}'
+- ansible.builtin.include_tasks: ferm-debops.yml
   when: neofs_ir__debops_ferm_import|bool

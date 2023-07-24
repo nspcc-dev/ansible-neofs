@@ -1,0 +1,11 @@
+---
+
+- name: Gather facts
+  ansible.builtin.setup:
+
+- name: Force debops.ferm run
+  ansible.builtin.include_role:
+    name: debops.debops.ferm
+  vars:
+    ferm__dependent_rules:
+      - '{{ neofs_ir__ferm__dependent_rules }}'

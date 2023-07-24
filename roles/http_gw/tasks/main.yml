@@ -35,10 +35,5 @@
     dest: '/etc/systemd/system/neofs-http.service'
   notify: [ 'Restart NeoFS HTTP service' ]
 
-- name: Force debops.ferm run
-  ansible.builtin.include_role:
-    name: debops.debops.ferm
-  vars:
-    ferm__dependent_rules:
-      - '{{ neofs_http__ferm__dependent_rules }}'
+- ansible.builtin.include_tasks: ferm-debops.yml
   when: neofs_http__debops_ferm_import|bool
