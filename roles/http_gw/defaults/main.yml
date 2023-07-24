@@ -92,7 +92,7 @@ neofs_http__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-http{{ neofs_http__instance }}_http'
     dport: [ '{{ neofs_http__http_port }}' ]
-    daddr: [ "{{ neofs_http__http_address }}{{ '/0' if neofs_http__http_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_http__http_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_http__http_address ) }}" ]
     saddr: '{{ neofs_http__http_allow + neofs_http__http_group_allow + neofs_http__http_host_allow }}'
     protocol: 'tcp'
     rule_state: 'present'
@@ -100,7 +100,7 @@ neofs_http__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-http{{ neofs_http__instance }}_prometheus'
     dport: [ '{{ neofs_http__prometheus_port }}' ]
-    daddr: [ "{{ neofs_http__prometheus_address }}{{ '/0' if neofs_http__prometheus_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_http__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_http__prometheus_address ) }}" ]
     saddr: '{{ neofs_http__prometheus_allow + neofs_http__prometheus_group_allow + neofs_http__prometheus_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_http__prometheus_enabled else 'absent' }}"
@@ -108,7 +108,7 @@ neofs_http__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-http{{ neofs_http__instance }}_pprof'
     dport: [ '{{ neofs_http__pprof_port }}' ]
-    daddr: [ "{{ neofs_http__pprof_address }}{{ '/0' if neofs_http__pprof_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_http__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_http__pprof_address ) }}" ]
     saddr: '{{ neofs_http__pprof_allow + neofs_http__pprof_group_allow + neofs_http__pprof_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_http__pprof_enabled else 'absent' }}"

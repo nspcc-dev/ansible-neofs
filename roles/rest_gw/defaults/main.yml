@@ -112,7 +112,7 @@ neofs_rest__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-rest{{ neofs_rest__instance }}_rest'
     dport: [ '{{ neofs_rest__rest_port }}' ]
-    daddr: [ "{{ neofs_rest__rest_address }}{{ '/0' if neofs_rest__rest_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_rest__rest_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_rest__rest_address ) }}" ]
     saddr: '{{ neofs_rest__rest_allow + neofs_rest__rest_group_allow + neofs_rest__rest_host_allow }}'
     protocol: 'tcp'
     rule_state: 'present'
@@ -120,7 +120,7 @@ neofs_rest__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-rest{{ neofs_rest__instance }}_prometheus'
     dport: [ '{{ neofs_rest__prometheus_port }}' ]
-    daddr: [ "{{ neofs_rest__prometheus_address }}{{ '/0' if neofs_rest__prometheus_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_rest__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_rest__prometheus_address ) }}" ]
     saddr: '{{ neofs_rest__prometheus_allow + neofs_rest__prometheus_group_allow + neofs_rest__prometheus_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_rest__prometheus_enabled else 'absent' }}"
@@ -128,7 +128,7 @@ neofs_rest__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-rest{{ neofs_rest__instance }}_pprof'
     dport: [ '{{ neofs_rest__pprof_port }}' ]
-    daddr: [ "{{ neofs_rest__pprof_address }}{{ '/0' if neofs_rest__pprof_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_rest__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_rest__pprof_address ) }}" ]
     saddr: '{{ neofs_rest__pprof_allow + neofs_rest__pprof_group_allow + neofs_rest__pprof_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_rest__pprof_enabled else 'absent' }}"

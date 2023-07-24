@@ -228,7 +228,7 @@ neofs_storage__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-storage{{ neofs_storage__instance }}_prometheus'
     dport: [ '{{ neofs_storage__prometheus_port }}' ]
-    daddr: [ "{{ neofs_storage__prometheus_address }}{{ '/0' if neofs_storage__prometheus_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_storage__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_storage__prometheus_address ) }}" ]
     saddr: '{{ neofs_storage__prometheus_allow + neofs_storage__prometheus_group_allow + neofs_storage__prometheus_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_storage__prometheus_enabled else 'absent' }}"
@@ -236,7 +236,7 @@ neofs_storage__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-storage{{ neofs_storage__instance }}_pprof'
     dport: [ '{{ neofs_storage__pprof_port }}' ]
-    daddr: [ "{{ neofs_storage__pprof_address }}{{ '/0' if neofs_storage__pprof_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_storage__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_storage__pprof_address ) }}" ]
     saddr: '{{ neofs_storage__pprof_allow + neofs_storage__pprof_group_allow + neofs_storage__pprof_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_storage__pprof_enabled else 'absent' }}"
@@ -244,7 +244,7 @@ neofs_storage__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-storage{{ neofs_storage__instance }}_control'
     dport: [ '{{ neofs_storage__control_port }}' ]
-    daddr: [ "{{ neofs_storage__control_address }}{{ '/0' if neofs_storage__control_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_storage__control_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_storage__control_address ) }}" ]
     saddr: '{{ neofs_storage__control_allow + neofs_storage__control_group_allow + neofs_storage__control_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_storage__control_enabled else 'absent' }}"

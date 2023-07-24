@@ -224,7 +224,7 @@ neofs_ir__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_prometheus'
     dport: [ '{{ neofs_ir__prometheus_port }}' ]
-    daddr: [ "{{ neofs_ir__prometheus_address }}{{ '/0' if neofs_ir__prometheus_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_ir__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__prometheus_address ) }}" ]
     saddr: '{{ neofs_ir__prometheus_allow + neofs_ir__prometheus_group_allow + neofs_ir__prometheus_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_ir__prometheus_enabled else 'absent' }}"
@@ -232,7 +232,7 @@ neofs_ir__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_pprof'
     dport: [ '{{ neofs_ir__pprof_port }}' ]
-    daddr: [ "{{ neofs_ir__pprof_address }}{{ '/0' if neofs_ir__pprof_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_ir__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__pprof_address ) }}" ]
     saddr: '{{ neofs_ir__pprof_allow + neofs_ir__pprof_group_allow + neofs_ir__pprof_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_ir__pprof_enabled else 'absent' }}"
@@ -240,7 +240,7 @@ neofs_ir__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_control'
     dport: [ '{{ neofs_ir__control_port }}' ]
-    daddr: [ "{{ neofs_ir__control_address }}{{ '/0' if neofs_ir__control_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_ir__control_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__control_address ) }}" ]
     saddr: '{{ neofs_ir__control_allow + neofs_ir__control_group_allow + neofs_ir__control_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_ir__control_enabled else 'absent' }}"
@@ -248,7 +248,7 @@ neofs_ir__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_blockchain_rpc'
     dport: [ '{{ neofs_ir__blockchain_rpc_port }}' ]
-    daddr: [ "{{ neofs_ir__blockchain_rpc_address }}{{ '/0' if neofs_ir__blockchain_rpc_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_ir__blockchain_rpc_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__blockchain_rpc_address ) }}" ]
     saddr: '{{ neofs_ir__blockchain_rpc_allow + neofs_ir__blockchain_rpc_group_allow + neofs_ir__blockchain_rpc_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if not neofs_ir__external_sidechain else 'absent' }}"
@@ -256,7 +256,7 @@ neofs_ir__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_blockchain_tls_rpc'
     dport: [ '{{ neofs_ir__blockchain_tls_rpc_port }}' ]
-    daddr: [ "{{ neofs_ir__blockchain_tls_rpc_address }}{{ '/0' if neofs_ir__blockchain_tls_rpc_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_ir__blockchain_tls_rpc_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__blockchain_tls_rpc_address ) }}" ]
     saddr: '{{ neofs_ir__blockchain_tls_rpc_allow + neofs_ir__blockchain_tls_rpc_group_allow + neofs_ir__blockchain_tls_rpc_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if neofs_ir__blockchain_tls_rpc_enabled else 'absent' }}"
@@ -264,7 +264,7 @@ neofs_ir__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_blockchain_p2p'
     dport: [ '{{ neofs_ir__blockchain_p2p_port }}' ]
-    daddr: [ "{{ neofs_ir__blockchain_p2p_address }}{{ '/0' if neofs_ir__blockchain_p2p_address in ['0.0.0.0', '::0', '::'] }}" ]
+    daddr: [ "{{ ( neofs_ir__blockchain_p2p_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__blockchain_p2p_address ) }}" ]
     saddr: '{{ neofs_ir__blockchain_p2p_allow + neofs_ir__blockchain_p2p_group_allow + neofs_ir__blockchain_p2p_host_allow }}'
     protocol: 'tcp'
     rule_state: "{{ 'present' if not neofs_ir__external_sidechain else 'absent' }}"
