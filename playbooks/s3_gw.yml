@@ -9,5 +9,5 @@
                    | combine(inventory__group_environment | d({}))
                    | combine(inventory__host_environment  | d({})) }}'
   roles:
-    - role: s3-gw
+    - role: s3_gw
       tags: [ 'role::neofs-s3-gw', 'skip::neofs-s3-gw' ]

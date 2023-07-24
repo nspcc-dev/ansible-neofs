@@ -10,5 +10,5 @@
                    | combine(inventory__group_environment | d({}))
                    | combine(inventory__host_environment  | d({})) }}'
   roles:
-    - role: http-gw
+    - role: http_gw
       tags: [ 'role::neofs-http-gw', 'skip::neofs-http-gw' ]
