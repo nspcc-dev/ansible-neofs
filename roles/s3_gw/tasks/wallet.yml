@@ -1,5 +1,32 @@
 ---
 
+- name: Check if wallet is exists
+  delegate_to: 'localhost'
+  become: False
+  ansible.builtin.stat:
+    path: '{{ neofs_s3__wallet }}'
+  register: wallet
+
+- name: Create local directory for wallets
+  delegate_to: 'localhost'
+  become: False
+  ansible.builtin.file:
+    path: '{{ neofs_s3__wallet | dirname }}'
+    state: 'directory'
+  when: not wallet.stat.exists
+
+- name: Create NeoFS S3 wallet
+  delegate_to: 'localhost'
+  become: False
+  ansible.builtin.command: >-
+    {{ neofs_s3__neofs_adm_cmd }} morph -c {{ neofs_s3__neofs_adm_config }} generate-storage-wallet
+    --storage-wallet {{ neofs_s3__wallet }}
+    --initial-gas 1
+    --alphabet-wallets {{ neofs_s3__alphabet_wallets }}
+    --label empty
+  when: not wallet.stat.exists
+
+
 - name: Copy NeoFS S3 wallet
   ansible.builtin.copy:
     content: '{{ neofs_s3__wallet }}'
