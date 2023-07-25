@@ -17,7 +17,7 @@ neofs_s3__group: 'neofs-s3'
 neofs_s3__conf_dir: '/etc/neofs/s3'
 neofs_s3__bin_path: '/usr/bin/neofs-s3-gw'
 
-neofs_s3__wallet_struct: ''
+neofs_s3__wallet: ''
 neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
 
 neofs_s3__s3_address: '::'

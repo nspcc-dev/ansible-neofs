@@ -21,14 +21,14 @@
   ansible.builtin.command: >-
     {{ neofs_storage__neofs_adm_cmd }} morph -c {{ neofs_storage__neofs_adm_config }} generate-storage-wallet
     --storage-wallet {{ neofs_storage__wallet }}
-    --initial-gas {{ neofs_storage__initial_gas }}
+    --initial-gas {{ neofs_storage__wallet_initial_gas }}
     --alphabet-wallets {{ neofs_storage__alphabet_wallets }}
     --label empty
   when: not wallet.stat.exists
 
 - name: Copy NeoFS Storage wallet
   ansible.builtin.copy:
-    content: '{{ neofs_storage__wallet_struct | to_nice_json(ensure_ascii=False) }}'
+    content: '{{ neofs_storage__wallet }}'
     dest: '{{ neofs_storage__wallet_path }}'
     owner: 'root'
     group: '{{ neofs_storage__group }}'
