@@ -54,11 +54,10 @@ neofs_s3__raw_config:
     - address: '{{ neofs_s3__s3_address | ansible.utils.ipwrap }}:{{ neofs_s3__s3_port }}'
   rpc_endpoint: 'http://localhost:40332'
   pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}' 
-  peers:
-    0:
-      address: 'localhost:8080'
-      priority: 1
-      weight: 1
+  peers: |
+    {% for host in groups['neofs_storage'] %}
+    {{ loop.index0|string + ": {address: '" + hostvars[host].ansible_host + ":8080'}" }}
+    {% endfor %}
 
 neofs_s3__default_config: 
   - enabled: '{{ neofs_s3__pprof_enabled }}'
