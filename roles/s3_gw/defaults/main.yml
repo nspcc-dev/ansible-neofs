@@ -21,7 +21,7 @@ neofs_s3__neofs_adm_cmd:    '{{ inventory_dir }}/../tmp/downloads/neofs-adm'
 neofs_s3__neofs_adm_config: '{{ inventory_dir }}/configuration/config.yaml'
 neofs_s3__alphabet_wallets: '{{ inventory_dir }}/configuration/alphabet'
 
-neofs_s3__wallet: '{{ sercret }}/wallets/s3/{{ inventory_hostname }}.json'
+neofs_s3__wallet: '{{ secret }}/wallets/s3/{{ inventory_hostname }}.json'
 neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
 neofs_s3__wallet_address: ''
 neofs_s3__wallet_password: ''
