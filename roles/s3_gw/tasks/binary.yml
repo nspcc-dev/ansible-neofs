@@ -15,18 +15,3 @@
       mode: '0755'
       force: yes
     github__notify: [ 'Restart NeoFS S3 service' ]
-
-- name: Download S3 Authmate binary 
-  ansible.builtin.include_role:
-    name: nspcc.ansible_goodies.github
-  vars:
-    github__org: '{{ neofs_s3__github_org }}'
-    github__repo: '{{ neofs_s3__github_repo }}'
-    github__version: '{{ neofs_s3__version }}'
-    github__asset_name: '{{ neofs_s3__auth_github_asset_name }}'
-    github__args:
-      dest: '{{ neofs_s3__auth_bin_path }}'
-      owner: 'root'
-      group: 'root'
-      mode: '0755'
-      force: yes

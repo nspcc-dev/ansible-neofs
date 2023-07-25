@@ -29,8 +29,6 @@
 - ansible.builtin.include_tasks: binary.yml
   when: not neofs_s3__configure_only|bool
 
-- ansible.builtin.include_tasks: auth_pregen.yml
-
 - name: Copy systemd unit
   ansible.builtin.template:
     src: 'neofs-s3.service.j2'

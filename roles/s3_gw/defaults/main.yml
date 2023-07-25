@@ -7,7 +7,6 @@ neofs_s3__github_org: 'nspcc-dev'
 neofs_s3__github_repo: 'neofs-s3-gw'
 
 neofs_s3__gw_github_asset_name: 'neofs-s3-gw-linux-amd64'
-neofs_s3__auth_github_asset_name: 'neofs-s3-authmate-linux-amd64'
 
 # Flag to skip binaries download
 neofs_s3__configure_only: False
@@ -17,7 +16,6 @@ neofs_s3__group: 'neofs-s3'
 
 neofs_s3__conf_dir: '/etc/neofs/s3'
 neofs_s3__bin_path: '/usr/bin/neofs-s3-gw'
-neofs_s3__auth_bin_path: '/usr/bin/neofs-s3-authmate'
 
 neofs_s3__wallet_struct: ''
 neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
