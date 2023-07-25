@@ -2,7 +2,7 @@
 
 - name: Copy NeoFS IR wallet
   ansible.builtin.copy:
-    content: '{{ neofs_ir__wallet }}'
+    src: '{{ neofs_ir__wallet }}'
     dest: '{{ neofs_ir__wallet_path }}'
     owner: 'root'
     group: '{{ neofs_ir__group }}'

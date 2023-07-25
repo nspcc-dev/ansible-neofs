@@ -28,7 +28,7 @@
 
 - name: Copy NeoFS Storage wallet
   ansible.builtin.copy:
-    content: '{{ neofs_storage__wallet }}'
+    src: '{{ neofs_storage__wallet }}'
     dest: '{{ neofs_storage__wallet_path }}'
     owner: 'root'
     group: '{{ neofs_storage__group }}'

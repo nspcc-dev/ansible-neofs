@@ -2,7 +2,7 @@
 
 - name: Copy NeoFS REST wallet
   ansible.builtin.copy:
-    content: '{{ neofs_rest__wallet }}'
+    src: '{{ neofs_rest__wallet }}'
     dest: '{{ neofs_rest__wallet_path }}'
     owner: 'root'
     group: '{{ neofs_rest__group }}'
