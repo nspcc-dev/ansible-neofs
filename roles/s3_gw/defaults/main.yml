@@ -49,7 +49,7 @@ neofs_s3__raw_config:
   wallet:
     path: '{{ neofs_s3__wallet_path }}'
     address: '{{ neofs_s3__wallet_address }}'
-    password: '{{ neofs_s3__wallet_password }}'
+    passphrase: '{{ neofs_s3__wallet_password }}'
   server:
     - address: '{{ neofs_s3__s3_address | ansible.utils.ipwrap }}:{{ neofs_s3__s3_port }}'
   rpc_endpoint: 'http://localhost:40332'
