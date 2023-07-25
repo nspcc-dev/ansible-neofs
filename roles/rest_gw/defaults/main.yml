@@ -15,7 +15,7 @@ neofs_rest__group: 'neofs-rest'
 neofs_rest__conf_dir: '/etc/neofs/rest'
 neofs_rest__bin_path: '/usr/bin/neofs-rest-gw'
 
-neofs_rest__wallet: ''
+neofs_rest__wallet: '{{ secret }}/wallets/rest/{{ inventory_hostname }}.json'
 neofs_rest__wallet_path: '{{ neofs_rest__conf_dir }}/wallet.json'
 neofs_rest__wallet_address: ''
 neofs_rest__wallet_password: ''

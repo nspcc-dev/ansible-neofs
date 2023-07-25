@@ -38,7 +38,7 @@ neofs_storage__neofs_adm_cmd:    '{{ inventory_dir }}/../tmp/downloads/neofs-adm
 neofs_storage__neofs_adm_config: '{{ inventory_dir }}/configuration/config.yaml'
 neofs_storage__alphabet_wallets: '{{ inventory_dir }}/configuration/alphabet'
 
-neofs_storage__wallet: '{{ inventory_dir }}/configuration/wallets/storage/{{ inventory_hostname }}.json'
+neofs_storage__wallet: '{{ secret }}/wallets/storage/{{ inventory_hostname }}.json'
 neofs_storage__wallet_initial_gas: 10
 neofs_storage__wallet_path: '{{ neofs_storage__conf_dir }}/wallet.json'
 neofs_storage__wallet_address: ''

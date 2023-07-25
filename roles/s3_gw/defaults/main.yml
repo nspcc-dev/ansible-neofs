@@ -21,7 +21,7 @@ neofs_s3__neofs_adm_cmd:    '{{ inventory_dir }}/../tmp/downloads/neofs-adm'
 neofs_s3__neofs_adm_config: '{{ inventory_dir }}/configuration/config.yaml'
 neofs_s3__alphabet_wallets: '{{ inventory_dir }}/configuration/alphabet'
 
-neofs_s3__wallet: '{{ inventory_dir }}/configuration/wallets/s3/{{ inventory_hostname }}.json'
+neofs_s3__wallet: '{{ sercret }}/wallets/s3/{{ inventory_hostname }}.json'
 neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
 neofs_s3__wallet_address: ''
 neofs_s3__wallet_password: ''
@@ -51,10 +51,23 @@ neofs_s3__raw_config:
     - address: '{{ neofs_s3__s3_address | ansible.utils.ipwrap }}:{{ neofs_s3__s3_port }}'
   rpc_endpoint: 'http://localhost:40332'
   pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}' 
-  peers: |
+  resolve_order: [ nns ]
+  tree:
+    service: 'localhost:8080'
+  rpc_endpoint: "http://{{ hostvars[ groups['neofs_ir'][0] ].ansible_host }}:10001"
+  peers: >-
+    {
     {% for host in groups['neofs_storage'] %}
-    {{ loop.index0|string + ": {address: '" + hostvars[host].ansible_host + ":8080'}" }}
+    {{ loop.index0|string + ": { 'address': '" + hostvars[host].ansible_host + ":8080', 'weight': 1, 'priority':" }}
+    {% if hostvars[host].ansible_host == ansible_host %}
+    1
+    {% else %}
+    2
+    {% endif %}
+    },
     {% endfor %}
+    }
+
 
 neofs_s3__default_config: 
   - enabled: '{{ neofs_s3__pprof_enabled }}'

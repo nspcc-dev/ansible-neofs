@@ -17,7 +17,7 @@ neofs_http__group: 'neofs-http'
 neofs_http__conf_dir: '/etc/neofs/http'
 neofs_http__bin_path: '/usr/bin/neofs-http-gw'
 
-neofs_http__wallet: ''
+neofs_http__wallet: '{{ secret }}/wallets/http/{{ inventory_hostname }}.json'
 neofs_http__wallet_path: '{{ neofs_http__conf_dir }}/wallet.json'
 neofs_http__wallet_address: ''
 neofs_http__wallet_password: ''
