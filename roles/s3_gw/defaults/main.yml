@@ -39,9 +39,6 @@ neofs_s3__pprof_port: 9932
 
 neofs_s3__pool_error_threshold: 100
 
-# Flag to skip binaries download in case of False
-neofs_s3__configure_only: False
-
 
 neofs_s3__raw_config:
   logger:
