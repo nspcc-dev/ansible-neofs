@@ -54,11 +54,18 @@ neofs_http__raw_config:
   server:
     - address: '{{ neofs_http__http_address | ansible.utils.ipwrap }}:{{ neofs_http__http_port }}'
   pool_error_threshold: '{{ neofs_http__pool_error_threshold }}'
-  peers:
-    0:
-      address: 'localhost:8080'
-      priority: 1
-      weight: 1
+  peers: >-
+    {
+    {% for host in groups['neofs_storage'] %}
+    {{ loop.index0|string + ": { 'address': '" + hostvars[host].ansible_host + ":8080', 'weight': 1, 'priority':" }}
+    {% if hostvars[host].ansible_host == ansible_host %}
+    1
+    {% else %}
+    2
+    {% endif %}
+    },
+    {% endfor %}
+    }
 
 neofs_http__default_config:
   - enabled: '{{ neofs_http__pprof_enabled }}'
