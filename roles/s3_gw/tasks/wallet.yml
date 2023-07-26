@@ -19,7 +19,7 @@
   delegate_to: 'localhost'
   become: False
   ansible.builtin.command: >-
-    {{ neofs_s3__neofs_adm_cmd }} morph -c {{ neofs_s3__neofs_adm_config }} generate-storage-wallet
+    neofs-adm morph -c {{ neofs_s3__neofs_adm_config }} generate-storage-wallet
     --storage-wallet {{ neofs_s3__wallet }}
     --initial-gas 1
     --alphabet-wallets {{ neofs_s3__alphabet_wallets }}

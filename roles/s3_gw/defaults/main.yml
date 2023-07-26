@@ -17,7 +17,6 @@ neofs_s3__group: 'neofs-s3'
 neofs_s3__conf_dir: '/etc/neofs/s3'
 neofs_s3__bin_path: '/usr/bin/neofs-s3-gw'
 
-neofs_s3__neofs_adm_cmd:    '{{ inventory_dir }}/../tmp/downloads/neofs-adm'
 neofs_s3__neofs_adm_config: '{{ inventory_dir }}/configuration/config.yaml'
 neofs_s3__alphabet_wallets: '{{ inventory_dir }}/configuration/alphabet'
 
