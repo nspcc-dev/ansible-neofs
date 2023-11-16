@@ -170,8 +170,8 @@ neofs_storage__shards: |
     writecache:
       path: '{{ neofs_storage__metas[ loop.index0 // (neofs_storage__datas|length // neofs_storage__metas|length) ] }}/writecache{{ loop.index0 if not neofs_storage__datas|length == neofs_storage__metas|length }}'
     blobstor:
-      - type: blobovnicza
-        path: '{{ data }}/blobovnicza'
+      - type: peapod
+        path: '{{ data }}/peapod.db'
       - type: fstree
         path: '{{ data }}/tree'
   {% endfor %}
