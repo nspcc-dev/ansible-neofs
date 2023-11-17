@@ -15,6 +15,25 @@ Ansible roles for [NeoFS][neofs]:
 [neofs-s3-gw]:   https://github.com/nspcc-dev/neofs-s3-gw
 [neofs-rest-gw]: https://github.com/nspcc-dev/neofs-rest-gw
 
+### Usage and configuration
+
+For available configuration settings check the role page:
+ - [ir][ir]
+ - [storage][storage]
+ - [http-gw][http-gw]
+ - [s3-gw][s3-gw]
+ - [rest-gw][rest-gw]
+
+For real usage example check [ansible-neofs-template][ansible-neofs-template].
+
+[ir]:      docs/ir.md
+[storage]: docs/storage.md
+[http-gw]: docs/http_gw.md
+[s3-gw]:   docs/s3_gw.md
+[rest-gw]: docs/rest_gw.md
+[ansible-neofs-template]: https://github.com/nspcc-dev/ansible-neofs-template
+
+
 ### Compatibility Table
 
 | NeoFS Node | collection |
