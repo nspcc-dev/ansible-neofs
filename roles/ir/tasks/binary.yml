@@ -15,19 +15,3 @@
       mode: '0755'
       force: yes
     github__notify: [ 'Restart NeoFS IR' ]
-
-- name: Download UN/LOCODE database
-  ansible.builtin.include_role:
-    name: nspcc.ansible_goodies.github
-  vars:
-    github__org: '{{ neofs_ir__github_org }}'
-    github__repo: '{{ neofs_ir__locodedb_github_repo }}'
-    github__version: '{{ neofs_ir__locodedb_version }}'
-    github__asset_name: '{{ neofs_ir__locodedb }}'
-    github__args:
-      dest: '{{ neofs_ir__locodedb_path }}'
-      owner: 'root'
-      group: 'root'
-      mode: '0644'
-      force: yes
-    github__notify: [ 'Restart NeoFS IR' ]

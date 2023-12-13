@@ -9,10 +9,6 @@ neofs_ir__bin: 'neofs-ir'
 neofs_ir__cli_bin: 'neofs-cli'
 neofs_ir__arch: 'amd64'
 
-neofs_ir__locodedb_version: 'latest'
-neofs_ir__locodedb_github_repo: 'neofs-locode-db'
-neofs_ir__locodedb: 'locode_db'
-
 # Flag to skip binaries download
 neofs_ir__configure_only: False
 
@@ -29,7 +25,6 @@ neofs_ir__conf_dir: '/etc/neofs/ir{{ neofs_ir__instance }}'
 neofs_ir__config_path: '{{ neofs_ir__conf_dir }}/config.yml'
 neofs_ir__bin_path: '/usr/bin/neofs-ir'
 neofs_ir__cli_bin_path: '/usr/bin/neofs-cli'
-neofs_ir__locodedb_path: '{{ neofs_ir__data_dir }}/locode.db'
 neofs_ir__control_api_config_path: '{{ neofs_ir__conf_dir }}/control.yml'
 
 # Directory for databases and processing results
@@ -127,10 +122,6 @@ neofs_ir__raw_config:
   node:
     persistent_state:
       path: '{{ neofs_ir__data_dir }}/state'
-
-  locode:
-    db:
-      path: '{{ neofs_ir__locodedb_path }}'
 
   fee:
     main_chain: 25000000

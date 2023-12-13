@@ -8,9 +8,6 @@
 | `neofs_ir__bin` | :command:`neofs-ir` binary name |
 | `neofs_ir__cli_bin` | :command:`neofs-cli` binary name |
 | `neofs_ir__arch` | Architecture to download binaries for. |
-| `neofs_ir__locodedb_version` | Version of the locode database to install. |
-| `neofs_ir__locodedb_github_repo` | GitHub repository to get the locodedb binary from. |
-| `neofs_ir__locodedb` | GitHub locode db release asset name. |
 | `neofs_ir__configure_only` | Skip binaries download. |
 | `neofs_ir__use_docker` | Run in service in docker |
 | `neofs_ir__docker_image: 'nspccdev/neofs-ir` | Docker image to get. |
@@ -21,7 +18,6 @@
 | `neofs_ir__config_path` | Absolute path to the configuration file. |
 | `neofs_ir__bin_path` | Absolute path to the :command:`neofs-ir` binary installed on the host. |
 | `neofs_ir__cli_bin_path` | Absolute path to the :command:`neofs-cli` binary installed on the host. |
-| `neofs_ir__locodedb_path` | Absolute path to the :file:`locode.db` binary installed on the host. |
 | `neofs_ir__control_api_config_path` | Absolute path to the control API config path. |
 | `neofs_ir__data_dir` | Directory for databases and processing results |
 | `neofs_ir__wallet` | Path to the :file:`secret/` directory on the Ansible Controller to get the wallet from. |
