@@ -53,6 +53,7 @@ neofs_rest__listen_limit: 0
 neofs_rest__keep_alive: '1m'
 neofs_rest__read_timeout: '30s'
 neofs_rest__write_timeout: '30s'
+neofs_rest__external-address: '{{ neofs_rest__rest_address }}:{{ neofs_rest__rest_port }}'
 
 neofs_rest__raw_config:
   logger:
@@ -71,6 +72,7 @@ neofs_rest__raw_config:
     keep-alive: '{{ neofs_rest__keep_alive }}'
     read-timeout: '{{ neofs_rest__read_timeout }}'
     write-timeout: '{{ neofs_rest__write_timeout }}'
+    external-address: '{{ neofs_rest__external-address }}'
   pool:
     node-dial-timeout: '{{ neofs_rest__node_dial_timeout }}'
     healthcheck-timeout: '{{ neofs_rest__healthcheck_timeout }}'
