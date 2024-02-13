@@ -15,6 +15,7 @@
 | `neofs_rest__wallet_path` | Absolute path to the wallet on the target host. |
 | `neofs_rest__wallet_address` | Account address. If omitted default one will be used. |
 | `neofs_rest__wallet_password` | Passphrase to decrypt the wallet. |
+| `neofs_rest__external_address` | The IP and port to be shown in the API documentation. Defaults to: `'{{ neofs_rest__rest_address }}:{{ neofs_rest__rest_port }'` |
 | `neofs_rest__rest_address` | Address to listen on. |
 | `neofs_rest__rest_port` | Port to listen on. |
 | `neofs_rest__rest_allow` | List of IP addresses or subnets that are allowed to connect to the service over the network, configured on all hosts in the Ansible inventory. If no entries are specified, access through the firewall is disabled. |
