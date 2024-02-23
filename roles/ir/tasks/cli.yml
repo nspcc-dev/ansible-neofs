@@ -7,7 +7,7 @@
     github__org: '{{ neofs_ir__github_org }}'
     github__repo: '{{ neofs_ir__github_repo }}'
     github__version: '{{ neofs_ir__version }}'
-    github__asset_name: '{{ neofs_ir__cli_bin }}-{{ neofs_ir__arch }}'
+    github__asset_name: '{{ neofs_ir__cli_bin }}-linux-{{ neofs_ir__arch }}'
     github__args:
       dest: '{{ neofs_ir__cli_bin_path }}'
       owner: 'root'
