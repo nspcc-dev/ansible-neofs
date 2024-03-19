@@ -45,7 +45,7 @@ neofs_rest__pool_error_threshold: 100
 neofs_rest__node_dial_timeout: '5s'
 neofs_rest__healthcheck_timeout: '5s'
 neofs_rest__rebalance_timer: '30s'
-neofs_rest__scheme: '[ http ]'
+neofs_rest__scheme: [ http ]
 neofs_rest__cleanup_timeout: '10s'
 neofs_rest__graceful_timeout: '15s'
 neofs_rest__max_header_size: 1000000
