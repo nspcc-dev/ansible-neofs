@@ -5,13 +5,11 @@ Ansible roles for [NeoFS][neofs]:
  - [Storage][neofs-node]
  - [REST Gateway][neofs-rest-gw]
  - [S3 Gateway][neofs-s3-gw]
- - [HTTP Gateway][neofs-http-gw]
 
 
 [neofs]:         https://fs.neo.org
 [neospcc]:       https://nspcc.io
 [neofs-node]:    https://github.com/nspcc-dev/neofs-node
-[neofs-http-gw]: https://github.com/nspcc-dev/neofs-http-gw
 [neofs-s3-gw]:   https://github.com/nspcc-dev/neofs-s3-gw
 [neofs-rest-gw]: https://github.com/nspcc-dev/neofs-rest-gw
 
@@ -20,7 +18,6 @@ Ansible roles for [NeoFS][neofs]:
 For available configuration settings check the role page:
  - [ir][ir]
  - [storage][storage]
- - [http-gw][http-gw]
  - [s3-gw][s3-gw]
  - [rest-gw][rest-gw]
 
@@ -28,7 +25,6 @@ For real usage example check [ansible-neofs-template][ansible-neofs-template].
 
 [ir]:      docs/ir.md
 [storage]: docs/storage.md
-[http-gw]: docs/http_gw.md
 [s3-gw]:   docs/s3_gw.md
 [rest-gw]: docs/rest_gw.md
 [ansible-neofs-template]: https://github.com/nspcc-dev/ansible-neofs-template
