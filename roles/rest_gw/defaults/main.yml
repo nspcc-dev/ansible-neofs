@@ -45,7 +45,6 @@ neofs_rest__pool_error_threshold: 100
 neofs_rest__node_dial_timeout: '5s'
 neofs_rest__healthcheck_timeout: '5s'
 neofs_rest__rebalance_timer: '30s'
-neofs_rest__scheme: [ http ]
 neofs_rest__cleanup_timeout: '10s'
 neofs_rest__graceful_timeout: '15s'
 neofs_rest__max_header_size: 1000000
@@ -63,16 +62,16 @@ neofs_rest__raw_config:
     address: '{{ neofs_rest__wallet_address }}'
     passphrase: '{{ neofs_rest__wallet_password }}'
   server:
-    listen-address: '{{ neofs_rest__rest_address | ansible.utils.ipwrap }}:{{ neofs_rest__rest_port }}'
-    scheme: '{{ neofs_rest__scheme }}'
+    endpoints:
+      - address: '{{ neofs_rest__rest_address | ansible.utils.ipwrap }}:{{ neofs_rest__rest_port }}'
+        external-address: '{{ neofs_rest__external_address }}'
+        keep-alive: '{{ neofs_rest__keep_alive }}'
+        read-timeout: '{{ neofs_rest__read_timeout }}'
+        write-timeout: '{{ neofs_rest__write_timeout }}'
     cleanup-timeout: '{{ neofs_rest__cleanup_timeout }}'
     graceful-timeout: '{{ neofs_rest__graceful_timeout }}'
     max-header-size: '{{ neofs_rest__max_header_size }}'
     listen-limit: '{{ neofs_rest__listen_limit }}'
-    keep-alive: '{{ neofs_rest__keep_alive }}'
-    read-timeout: '{{ neofs_rest__read_timeout }}'
-    write-timeout: '{{ neofs_rest__write_timeout }}'
-    external-address: '{{ neofs_rest__external_address }}'
   pool:
     node-dial-timeout: '{{ neofs_rest__node_dial_timeout }}'
     healthcheck-timeout: '{{ neofs_rest__healthcheck_timeout }}'
