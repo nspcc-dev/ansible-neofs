@@ -9,6 +9,10 @@ neofs_storage__bin: 'neofs-node'
 neofs_storage__cli_bin: 'neofs-cli'
 neofs_storage__arch: 'amd64'
 
+# set to true for installation process
+# -e 'neofs_ir__first_run=True'
+neofs_ir__first_run: False
+
 # Flag to skip binaries download
 neofs_storage__configure_only: False
 

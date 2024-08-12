@@ -15,3 +15,4 @@
   until: _neofs_storage_check_result.rc == 0
   retries: 10
   delay: 30
+  when: not neofs_ir__first_run|bool

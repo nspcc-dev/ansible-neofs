@@ -9,6 +9,10 @@ neofs_ir__bin: 'neofs-ir'
 neofs_ir__cli_bin: 'neofs-cli'
 neofs_ir__arch: 'amd64'
 
+# set to true for installation process
+# -e 'neofs_ir__first_run=True'
+neofs_ir__first_run: False
+
 # Flag to skip binaries download
 neofs_ir__configure_only: False
 
