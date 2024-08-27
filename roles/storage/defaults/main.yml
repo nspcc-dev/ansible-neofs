@@ -232,7 +232,7 @@ neofs_storage__ferm__dependent_rules:
     daddr: [ "{{ ( neofs_storage__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_storage__prometheus_address ) }}" ]
     saddr: '{{ neofs_storage__prometheus_allow + neofs_storage__prometheus_group_allow + neofs_storage__prometheus_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_storage__prometheus_enabled else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_storage__prometheus_enabled and neofs_storage__prometheus_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-storage{{ neofs_storage__instance }}_pprof'
@@ -240,7 +240,7 @@ neofs_storage__ferm__dependent_rules:
     daddr: [ "{{ ( neofs_storage__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_storage__pprof_address ) }}" ]
     saddr: '{{ neofs_storage__pprof_allow + neofs_storage__pprof_group_allow + neofs_storage__pprof_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_storage__pprof_enabled else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_storage__pprof_enabled and neofs_storage__pprof_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-storage{{ neofs_storage__instance }}_control'
@@ -248,4 +248,4 @@ neofs_storage__ferm__dependent_rules:
     daddr: [ "{{ ( neofs_storage__control_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_storage__control_address ) }}" ]
     saddr: '{{ neofs_storage__control_allow + neofs_storage__control_group_allow + neofs_storage__control_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_storage__control_enabled else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_storage__control_enabled and neofs_storage__control_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
