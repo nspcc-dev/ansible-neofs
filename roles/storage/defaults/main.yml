@@ -214,11 +214,6 @@ neofs_storage__combined_config: '{{
   neofs_storage__host_config }}'
 
 
-# Force debops.ferm run via role import
-# May be useful when you need to have multiple instances with different
-# firewall rules for each one.
-neofs_storage__debops_ferm_import: False
-
 # firewall configuration to be applied with debops.ferm role
 neofs_storage__ferm__dependent_rules:
   - type: 'accept'

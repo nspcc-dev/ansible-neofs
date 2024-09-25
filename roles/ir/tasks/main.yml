@@ -55,5 +55,7 @@
 
 - ansible.builtin.include_tasks: healthcheck.yml
 
-- ansible.builtin.include_tasks: ferm-debops.yml
-  when: neofs_ir__debops_ferm_import|bool
+- name: Save debops.ferm rules as facts
+  tags: [ 'role::ferm', 'skip::ferm' ]
+  ansible.builtin.set_fact:
+    neofs_ir__ferm__rules: '{{ neofs_ir__ferm__rules|d([]) + neofs_ir__ferm__dependent_rules }}'
