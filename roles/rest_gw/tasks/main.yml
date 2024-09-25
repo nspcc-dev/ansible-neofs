@@ -35,5 +35,7 @@
     dest: '/etc/systemd/system/neofs-rest.service'
   notify: [ 'Restart NeoFS REST service' ]
 
-- ansible.builtin.include_tasks: ferm-debops.yml
-  when: neofs_rest__debops_ferm_import|bool
+- name: Save debops.ferm rules as facts
+  tags: [ 'role::ferm', 'skip::ferm' ]
+  ansible.builtin.set_fact:
+    neofs_rest__ferm__rules: '{{ neofs_rest__ferm__rules|d([]) + neofs_rest__ferm__dependent_rules }}'

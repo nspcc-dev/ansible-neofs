@@ -68,5 +68,4 @@
 | `neofs_storage__group_config` | Additional ``{{ neofs_storage__conf_dir }}/config.yaml`` configuration that should be present on all hosts in the Ansible inventory group. |
 | `neofs_storage__host_config` | Additional ``{{ neofs_storage__conf_dir }}/config.yaml`` configuration that should be present on specific hosts in the Ansible inventory. |
 | `neofs_storage__combined_config` | The combined configuration variables that will be used to template the ``{{ neofs_storage__conf_dir }}/config.yaml`` file |
-| `neofs_storage__debops_ferm_import` | Use debops.ferm role (via role import) |
-| `neofs_storage__ferm__dependent_rules` | Firewall configuration for the :ref:`debops.ferm` Ansible role. |
+| `neofs_storage__ferm__rules` | Firewall configuration for the :ref:`debops.ferm` Ansible role. |

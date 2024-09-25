@@ -106,10 +106,6 @@ neofs_rest__combined_config: '{{
   neofs_rest__host_config }}'
 
 
-# debops.ferm force run via role import
-# May be useful when multiple instances with different firewall rules for each one are required
-neofs_rest__debops_ferm_import: False
-
 # firewall configuration to be applied with debops.ferm role
 neofs_rest__ferm__dependent_rules:
   - type: 'accept'
