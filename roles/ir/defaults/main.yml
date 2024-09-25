@@ -217,7 +217,7 @@ neofs_ir__ferm__dependent_rules:
     daddr: [ "{{ ( neofs_ir__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__prometheus_address ) }}" ]
     saddr: '{{ neofs_ir__prometheus_allow + neofs_ir__prometheus_group_allow + neofs_ir__prometheus_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_ir__prometheus_enabled and neofs_ir__prometheus_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_ir__prometheus_enabled and not ( neofs_ir__prometheus_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_ir__prometheus_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_ir__prometheus_address ) ) else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_pprof'
@@ -225,7 +225,7 @@ neofs_ir__ferm__dependent_rules:
     daddr: [ "{{ ( neofs_ir__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__pprof_address ) }}" ]
     saddr: '{{ neofs_ir__pprof_allow + neofs_ir__pprof_group_allow + neofs_ir__pprof_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_ir__pprof_enabled and neofs_ir__pprof_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_ir__pprof_enabled and not ( neofs_ir__pprof_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_ir__pprof_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_ir__pprof_address ) ) else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_control'
@@ -233,7 +233,7 @@ neofs_ir__ferm__dependent_rules:
     daddr: [ "{{ ( neofs_ir__control_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__control_address ) }}" ]
     saddr: '{{ neofs_ir__control_allow + neofs_ir__control_group_allow + neofs_ir__control_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_ir__control_enabled and neofs_ir__control_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_ir__control_enabled and not ( neofs_ir__control_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_ir__control_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_ir__control_address ) ) else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_blockchain_rpc'
@@ -241,7 +241,7 @@ neofs_ir__ferm__dependent_rules:
     daddr: [ "{{ ( neofs_ir__blockchain_rpc_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__blockchain_rpc_address ) }}" ]
     saddr: '{{ neofs_ir__blockchain_rpc_allow + neofs_ir__blockchain_rpc_group_allow + neofs_ir__blockchain_rpc_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if not neofs_ir__external_sidechain and neofs_ir__blockchain_rpc_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if not neofs_ir__external_sidechain and not ( neofs_ir__blockchain_rpc_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_ir__blockchain_rpc_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_ir__blockchain_rpc_address ) ) else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_blockchain_tls_rpc'
@@ -249,7 +249,7 @@ neofs_ir__ferm__dependent_rules:
     daddr: [ "{{ ( neofs_ir__blockchain_tls_rpc_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__blockchain_tls_rpc_address ) }}" ]
     saddr: '{{ neofs_ir__blockchain_tls_rpc_allow + neofs_ir__blockchain_tls_rpc_group_allow + neofs_ir__blockchain_tls_rpc_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_ir__blockchain_tls_rpc_enabled and neofs_ir__blockchain_tls_rpc_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_ir__blockchain_tls_rpc_enabled and not ( neofs_ir__blockchain_tls_rpc_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_ir__blockchain_tls_rpc_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_ir__blockchain_tls_rpc_address ) ) else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-ir{{ neofs_ir__instance }}_blockchain_p2p'
@@ -257,4 +257,4 @@ neofs_ir__ferm__dependent_rules:
     daddr: [ "{{ ( neofs_ir__blockchain_p2p_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_ir__blockchain_p2p_address ) }}" ]
     saddr: '{{ neofs_ir__blockchain_p2p_allow + neofs_ir__blockchain_p2p_group_allow + neofs_ir__blockchain_p2p_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if not neofs_ir__external_sidechain and neofs_ir__blockchain_p2p_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if not neofs_ir__external_sidechain and not ( neofs_ir__blockchain_p2p_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_ir__blockchain_p2p_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_ir__blockchain_p2p_address ) ) else 'absent' }}"
