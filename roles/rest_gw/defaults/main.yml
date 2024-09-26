@@ -111,7 +111,7 @@ neofs_rest__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-rest{{ neofs_rest__instance }}_rest'
     dport: [ '{{ neofs_rest__rest_port }}' ]
-    daddr: [ "{{ ( neofs_rest__rest_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_rest__rest_address ) }}" ]
+    daddr: "{{ ( neofs_rest__rest_address in ['0.0.0.0', '::0', '::'] )| ternary( [], [neofs_rest__rest_address] ) }}"
     saddr: '{{ neofs_rest__rest_allow + neofs_rest__rest_group_allow + neofs_rest__rest_host_allow }}'
     protocol: 'tcp'
     rule_state: 'present'
@@ -119,15 +119,15 @@ neofs_rest__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-rest{{ neofs_rest__instance }}_prometheus'
     dport: [ '{{ neofs_rest__prometheus_port }}' ]
-    daddr: [ "{{ ( neofs_rest__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_rest__prometheus_address ) }}" ]
+    daddr: "{{ ( neofs_rest__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( [], [neofs_rest__prometheus_address] ) }}"
     saddr: '{{ neofs_rest__prometheus_allow + neofs_rest__prometheus_group_allow + neofs_rest__prometheus_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_rest__prometheus_enabled and neofs_rest__prometheus_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_rest__prometheus_enabled and not ( neofs_rest__prometheus_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_rest__prometheus_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_rest__prometheus_address ) ) else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-rest{{ neofs_rest__instance }}_pprof'
     dport: [ '{{ neofs_rest__pprof_port }}' ]
-    daddr: [ "{{ ( neofs_rest__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_rest__pprof_address ) }}" ]
+    daddr: "{{ ( neofs_rest__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( [], [neofs_rest__pprof_address] ) }}"
     saddr: '{{ neofs_rest__pprof_allow + neofs_rest__pprof_group_allow + neofs_rest__pprof_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_rest__pprof_enabled and neofs_rest__pprof_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_rest__pprof_enabled and not ( neofs_rest__pprof_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_rest__pprof_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_rest__pprof_address ) ) else 'absent' }}"

@@ -116,7 +116,7 @@ neofs_storage__grpc_ferm_rules: |
   {% for endpoint in neofs_storage__grpc_endpoints %}
   {% if 'enabled' not in endpoint or endpoint.enabled %}
   - dport: [ '{{ endpoint.port }}' ]
-    daddr: [ "{{ ( endpoint.address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', endpoint.address ) }}" ]
+    daddr: "{{ ( endpoint.address in ['0.0.0.0', '::0', '::'] )| ternary( [], [endpoint.address] ) }}"
     saddr: {{ endpoint.allow }}
     protocol: 'tcp'
   {% endif %}
@@ -224,23 +224,23 @@ neofs_storage__ferm__dependent_rules:
   - type: 'accept'
     name: 'neofs-storage{{ neofs_storage__instance }}_prometheus'
     dport: [ '{{ neofs_storage__prometheus_port }}' ]
-    daddr: [ "{{ ( neofs_storage__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_storage__prometheus_address ) }}" ]
+    daddr: "{{ ( neofs_storage__prometheus_address in ['0.0.0.0', '::0', '::'] )| ternary( [], [neofs_storage__prometheus_address] ) }}"
     saddr: '{{ neofs_storage__prometheus_allow + neofs_storage__prometheus_group_allow + neofs_storage__prometheus_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_storage__prometheus_enabled and neofs_storage__prometheus_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_storage__prometheus_enabled and not ( neofs_storage__prometheus_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_storage__prometheus_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_storage__prometheus_address ) ) else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-storage{{ neofs_storage__instance }}_pprof'
     dport: [ '{{ neofs_storage__pprof_port }}' ]
-    daddr: [ "{{ ( neofs_storage__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_storage__pprof_address ) }}" ]
+    daddr: "{{ ( neofs_storage__pprof_address in ['0.0.0.0', '::0', '::'] )| ternary( [], [neofs_storage__pprof_address] ) }}"
     saddr: '{{ neofs_storage__pprof_allow + neofs_storage__pprof_group_allow + neofs_storage__pprof_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_storage__pprof_enabled and neofs_storage__pprof_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_storage__pprof_enabled and not ( neofs_storage__pprof_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_storage__pprof_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_storage__pprof_address ) ) else 'absent' }}"
 
   - type: 'accept'
     name: 'neofs-storage{{ neofs_storage__instance }}_control'
     dport: [ '{{ neofs_storage__control_port }}' ]
-    daddr: [ "{{ ( neofs_storage__control_address in ['0.0.0.0', '::0', '::'] )| ternary( '0/0', neofs_storage__control_address ) }}" ]
+    daddr: "{{ ( neofs_storage__control_address in ['0.0.0.0', '::0', '::'] )| ternary( [], [neofs_storage__control_address] ) }}"
     saddr: '{{ neofs_storage__control_allow + neofs_storage__control_group_allow + neofs_storage__control_host_allow }}'
     protocol: 'tcp'
-    rule_state: "{{ 'present' if neofs_storage__control_enabled and neofs_storage__control_address not in ['localhost', '127.0.0.1', '::1'] else 'absent' }}"
+    rule_state: "{{ 'present' if neofs_storage__control_enabled and not ( neofs_storage__control_address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( neofs_storage__control_address ) or '::1/128'|ansible.utils.network_in_usable( neofs_storage__control_address ) ) else 'absent' }}"
