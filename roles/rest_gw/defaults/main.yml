@@ -9,6 +9,8 @@ neofs_rest__github_asset_name: 'neofs-rest-gw-linux-amd64'
 # Flag to skip binaries download
 neofs_rest__binaries_download: True
 
+neofs_rest__instance: ''
+
 neofs_rest__user: 'neofs-rest'
 neofs_rest__group: 'neofs-rest'
 
