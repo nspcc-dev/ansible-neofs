@@ -116,7 +116,9 @@ neofs_storage__grpc_ferm_rules: |
   {% for endpoint in neofs_storage__grpc_endpoints %}
   {% if 'enabled' not in endpoint or endpoint.enabled %}
   - dport: [ '{{ endpoint.port }}' ]
-    daddr: "{{ ( endpoint.address in ['0.0.0.0', '::0', '::'] )| ternary( [], [endpoint.address] ) }}"
+  {% if endpoint.address not in ['0.0.0.0', '::0', '::'] %}
+    daddr: [ '{{ endpoint.address }}' ]
+  {% endif %}
     saddr: {{ endpoint.allow }}
     protocol: 'tcp'
   {% endif %}
