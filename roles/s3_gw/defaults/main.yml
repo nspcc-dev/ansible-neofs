@@ -49,7 +49,7 @@ neofs_s3__raw_config:
   server:
     - address: '{{ neofs_s3__s3_address | ansible.utils.ipwrap }}:{{ neofs_s3__s3_port }}'
   rpc_endpoint: 'http://localhost:40332'
-  pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}' 
+  pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}'
   resolve_order: [ nns ]
   tree:
     service: 'localhost:8080'
@@ -68,7 +68,7 @@ neofs_s3__raw_config:
     }
 
 
-neofs_s3__default_config: 
+neofs_s3__default_config:
   - enabled: '{{ neofs_s3__pprof_enabled }}'
     options:
       pprof:

@@ -1,6 +1,6 @@
 ---
 
-- name: Download NeoFS S3 GW binary 
+- name: Download NeoFS S3 GW binary
   ansible.builtin.include_role:
     name: nspcc.ansible_goodies.github
   vars:
