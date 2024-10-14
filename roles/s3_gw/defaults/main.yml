@@ -39,6 +39,18 @@ neofs_s3__pprof_port: 9932
 neofs_s3__pool_error_threshold: 100
 
 neofs_s3__fschain_endpoints: [ 'http://localhost:10001' ]
+neofs_s3__peers: >-
+  {
+  {% for host in groups['neofs_storage'] %}
+  {{ loop.index0|string + ": { 'address': '" + hostvars[host].ansible_host + ":8080', 'weight': 1, 'priority':" }}
+  {% if hostvars[host].ansible_host == ansible_host %}
+  1
+  {% else %}
+  2
+  {% endif %}
+  },
+  {% endfor %}
+  }
 
 neofs_s3__raw_config:
   logger:
@@ -54,20 +66,8 @@ neofs_s3__raw_config:
   tree:
     service: 'localhost:8080'
   fschain:
-    endpoints:
-  peers: >-
-    {
-    {% for host in groups['neofs_storage'] %}
-    {{ loop.index0|string + ": { 'address': '" + hostvars[host].ansible_host + ":8080', 'weight': 1, 'priority':" }}
-    {% if hostvars[host].ansible_host == ansible_host %}
-    1
-    {% else %}
-    2
-    {% endif %}
-    },
-    {% endfor %}
-    }
-
+    endpoints: '{{ neofs_s3__fschain_endpoints }}'
+  peers: '{{ neofs_s3__peers }}'
 
 neofs_s3__default_config:
   - enabled: '{{ neofs_s3__pprof_enabled }}'
