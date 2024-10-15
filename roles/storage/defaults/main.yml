@@ -47,6 +47,8 @@ neofs_storage__wallet_path: '{{ neofs_storage__conf_dir }}/wallet.json'
 neofs_storage__wallet_address: ''
 neofs_storage__wallet_password: ''
 
+neofs_storage__tree_service: False
+
 neofs_storage__morph_endpoints: []
 neofs_storage__announce_addresses: [ '{{ neofs_storage__grpc_address | ansible.utils.ipwrap }}:{{ neofs_storage__grpc_port }}' ]
 
@@ -180,6 +182,12 @@ neofs_storage__shards: |
         path: '{{ data }}/peapod.db'
       - type: fstree
         path: '{{ data }}/tree'
+  {% if neofs_storage__tree_service %}
+    pilorama:
+        path: '{{ data }}/pilorama.db'
+        max_batch_delay: 10ms
+        max_batch_size: 200
+  {% endif %}
   {% endfor %}
 
 
@@ -204,6 +212,16 @@ neofs_storage__default_config:
       pprof:
         enabled: True
         address: '{{ neofs_storage__pprof_address | ansible.utils.ipwrap }}:{{ neofs_storage__pprof_port }}'
+
+  - enabled: '{{ neofs_storage__tree_service }}'
+    options:
+      tree:
+        enabled: true
+        cache_size: 15
+        replication_worker_count: 16
+        replication_channel_capacity: 16
+        replication_timeout: 5s
+        sync_interval: 1h
 
 neofs_storage__config: []
 neofs_storage__group_config: []
