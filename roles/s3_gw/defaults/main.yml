@@ -30,14 +30,27 @@ neofs_s3__s3_port: 8084
 
 neofs_s3__prometheus_enabled: False
 neofs_s3__prometheus_address: 'localhost'
-neofs_s3__prometheus_port: 9931
+neofs_s3__prometheus_port: 9951
 
 neofs_s3__pprof_enabled: False
 neofs_s3__pprof_address: 'localhost'
-neofs_s3__pprof_port: 9932
+neofs_s3__pprof_port: 9952
 
 neofs_s3__pool_error_threshold: 100
 
+neofs_s3__fschain_endpoints: [ 'http://localhost:10001' ]
+neofs_s3__peers: >-
+  {
+  {% for host in groups['neofs_storage'] %}
+  {{ loop.index0|string + ": { 'address': '" + hostvars[host].ansible_host + ":8080', 'weight': 1, 'priority':" }}
+  {% if hostvars[host].ansible_host == ansible_host %}
+  1
+  {% else %}
+  2
+  {% endif %}
+  },
+  {% endfor %}
+  }
 
 neofs_s3__raw_config:
   logger:
@@ -48,27 +61,15 @@ neofs_s3__raw_config:
     passphrase: '{{ neofs_s3__wallet_password }}'
   server:
     - address: '{{ neofs_s3__s3_address | ansible.utils.ipwrap }}:{{ neofs_s3__s3_port }}'
-  rpc_endpoint: 'http://localhost:40332'
-  pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}' 
+  pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}'
   resolve_order: [ nns ]
   tree:
     service: 'localhost:8080'
-  rpc_endpoint: "http://{{ hostvars[ groups['neofs_ir'][0] ].ansible_host }}:10001"
-  peers: >-
-    {
-    {% for host in groups['neofs_storage'] %}
-    {{ loop.index0|string + ": { 'address': '" + hostvars[host].ansible_host + ":8080', 'weight': 1, 'priority':" }}
-    {% if hostvars[host].ansible_host == ansible_host %}
-    1
-    {% else %}
-    2
-    {% endif %}
-    },
-    {% endfor %}
-    }
+  fschain:
+    endpoints: '{{ neofs_s3__fschain_endpoints }}'
+  peers: '{{ neofs_s3__peers }}'
 
-
-neofs_s3__default_config: 
+neofs_s3__default_config:
   - enabled: '{{ neofs_s3__pprof_enabled }}'
     options:
       pprof:

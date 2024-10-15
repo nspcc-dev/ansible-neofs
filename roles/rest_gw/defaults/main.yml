@@ -101,9 +101,9 @@ neofs_rest__config: []
 neofs_rest__group_config: []
 neofs_rest__host_config: []
 
-neofs_rest__combined_config: '{{ 
+neofs_rest__combined_config: '{{
   neofs_rest__default_config +
-  neofs_rest__config + 
+  neofs_rest__config +
   neofs_rest__group_config +
   neofs_rest__host_config }}'
 
