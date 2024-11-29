@@ -103,8 +103,7 @@ neofs_storage__grpc_endpoints:
 neofs_storage__grpc: |
   {% for endpoint in neofs_storage__grpc_endpoints %}
   {% if 'enabled' not in endpoint or endpoint.enabled %}
-  {{ loop.index0 }}:
-    endpoint: '{{ endpoint.address | ansible.utils.ipwrap }}:{{ endpoint.port }}'
+  - endpoint: '{{ endpoint.address | ansible.utils.ipwrap }}:{{ endpoint.port }}'
   {% if 'tls' in endpoint and endpoint.tls %}
     tls:
       enabled: True
@@ -129,7 +128,7 @@ neofs_storage__grpc_ferm_rules: |
 neofs_storage__raw_config:
   logger:
     level: info
-  morph:
+  fschain:
     endpoints: '{{ neofs_storage__morph_endpoints }}'
   node:
     wallet:
@@ -141,8 +140,6 @@ neofs_storage__raw_config:
       path: '{{ neofs_storage__data_dir }}/sessions'
     persistent_state:
       path: '{{ neofs_storage__data_dir }}/state'
-    subnet:
-      exit_zero: False
     relay: False
   grpc: '{{ neofs_storage__grpc | from_yaml }}'
   control:
