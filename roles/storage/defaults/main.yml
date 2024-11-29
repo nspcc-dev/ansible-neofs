@@ -129,7 +129,7 @@ neofs_storage__grpc_ferm_rules: |
 neofs_storage__raw_config:
   logger:
     level: info
-  morph:
+  fschain:
     endpoints: '{{ neofs_storage__morph_endpoints }}'
   node:
     wallet:

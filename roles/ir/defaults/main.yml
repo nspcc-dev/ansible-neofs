@@ -155,17 +155,17 @@ neofs_ir__default_config:
 
   - enabled: '{{ neofs_ir__external_sidechain }}'
     options:
-      morph:
+      fschain:
         endpoints: '{{ neofs_ir__morph_endpoints }}'
 
   - enabled: '{{ neofs_ir__validators }}'
     options:
-      morph:
+      fschain:
         validators: '{{ neofs_ir__validators }}'
 
   - enabled: '{{ not neofs_ir__external_sidechain }}'
     options:
-      morph:
+      fschain:
         consensus: '{{ neofs_ir__sidechain_config }}'
 
   - enabled: '{{ neofs_ir__control_enabled }}'
@@ -188,7 +188,7 @@ neofs_ir__default_config:
 
   - enabled: '{{ neofs_ir__blockchain_tls_rpc_enabled }}'
     options:
-      morph:
+      fschain:
         consensus:
           rpc:
             tls:
