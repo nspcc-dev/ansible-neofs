@@ -131,7 +131,6 @@ neofs_ir__raw_config:
 
   fee:
     main_chain: 25000000
-    side_chain: 500000000
   emit:
     storage:
       amount: 400000000

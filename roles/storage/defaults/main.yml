@@ -141,8 +141,6 @@ neofs_storage__raw_config:
       path: '{{ neofs_storage__data_dir }}/sessions'
     persistent_state:
       path: '{{ neofs_storage__data_dir }}/state'
-    subnet:
-      exit_zero: False
     relay: False
   grpc: '{{ neofs_storage__grpc | from_yaml }}'
   control:
