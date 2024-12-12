@@ -74,7 +74,7 @@
 | `neofs_ir__validators` | List of hex-encoded 33-byte public keys of sidechain validators to vote for at application startup. |
 | `neofs_ir__consensus_committee` | List of hex-encoded 33-byte public keys. |
 | `neofs_ir__mainnet_endpoints` | List of websocket RPC endpoints in mainchain. |
-| `neofs_ir__morph_endpoints: [ 'ws://localhost` | List of websocket RPC endpoints in sidechain. |
+| `neofs_ir__fschain_endpoints: [ 'ws://localhost` | List of websocket RPC endpoints in FS chain. |
 | `neofs_ir__sidechain_config` | Local consensus config part. |
 | `neofs_ir__raw_config` | The base for ``{{ neofs_ir__conf_dir }}/config.yaml`` that will be extended with :envvar:`neofs_ir__*config` |
 | `neofs_ir__default_config` | The default ``{{ neofs_ir__conf_dir }}/config.yaml`` configuration provided by this role. |

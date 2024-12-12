@@ -60,7 +60,7 @@ neofs_ir__pprof_allow: []
 neofs_ir__pprof_group_allow: []
 neofs_ir__pprof_host_allow: []
 
-neofs_ir__blockchain_database_path: '{{ neofs_ir__data_dir }}/morph.bolt'
+neofs_ir__blockchain_database_path: '{{ neofs_ir__data_dir }}/fschain.bolt'
 neofs_ir__blockchain_notary_disabled: False
 neofs_ir__blockchain_time_per_block: '15s'
 neofs_ir__blockchain_magic: '1'
@@ -95,7 +95,7 @@ neofs_ir__blockchain_p2p_addresses: [ '{{ neofs_ir__blockchain_p2p_address | ans
 neofs_ir__validators: []
 neofs_ir__consensus_committee: []
 neofs_ir__mainnet_endpoints: []
-neofs_ir__morph_endpoints: [ 'ws://localhost:40332/ws' ]
+neofs_ir__fschain_endpoints: [ 'ws://localhost:40332/ws' ]
 
 neofs_ir__external_sidechain: False
 neofs_ir__sidechain_config:
@@ -156,7 +156,7 @@ neofs_ir__default_config:
   - enabled: '{{ neofs_ir__external_sidechain }}'
     options:
       fschain:
-        endpoints: '{{ neofs_ir__morph_endpoints }}'
+        endpoints: '{{ neofs_ir__fschain_endpoints }}'
 
   - enabled: '{{ neofs_ir__validators }}'
     options:
