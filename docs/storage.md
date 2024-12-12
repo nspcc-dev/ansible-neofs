@@ -30,7 +30,7 @@
 | `neofs_storage__wallet_path` | Absolute path to the wallet on the target host. |
 | `neofs_storage__wallet_address` | Account address. If omitted default one will be used. |
 | `neofs_storage__wallet_password` | Passphrase to decrypt the wallet. |
-| `neofs_storage__morph_endpoints` | Sidechain NEO RPC endpoints. |
+| `neofs_storage__fschain_endpoints` | FS chain NEO RPC endpoints. |
 | `neofs_storage__announce_addresses: [ '{{ neofs_storage__grpc_address | ansible.utils.ipwrap }}` | List of addresses to announce to the Network map. |
 | `neofs_storage__grpc_address: ':` | Address for gRPC endpoint |
 | `neofs_storage__grpc_port` | Port for gRPC endpoint |

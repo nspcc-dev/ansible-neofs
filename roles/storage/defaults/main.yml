@@ -49,7 +49,7 @@ neofs_storage__wallet_password: ''
 
 neofs_storage__tree_service: False
 
-neofs_storage__morph_endpoints: []
+neofs_storage__fschain_endpoints: []
 neofs_storage__announce_addresses: [ '{{ neofs_storage__grpc_address | ansible.utils.ipwrap }}:{{ neofs_storage__grpc_port }}' ]
 
 neofs_storage__grpc_address: '::'
@@ -129,7 +129,7 @@ neofs_storage__raw_config:
   logger:
     level: info
   fschain:
-    endpoints: '{{ neofs_storage__morph_endpoints }}'
+    endpoints: '{{ neofs_storage__fschain_endpoints }}'
   node:
     wallet:
       path: '{{ neofs_storage__wallet_path }}'
