@@ -44,7 +44,6 @@
 | `neofs_ir__pprof_host_allow` | List of IP addresses or subnets that are allowed to connect to the pprof endpoint over the network, configured on specific hosts in the Ansible inventory. If no entries are specified, access through the firewall is disabled. |
 | `neofs_ir__external_sidechain` | Enable or disable support internal sidechain. |
 | `neofs_ir__blockchain_database_path` | Absolute path to the database file. |
-| `neofs_ir__blockchain_notary_disabled` | Enable or disable notary mode for sidechain. |
 | `neofs_ir__blockchain_time_per_block` | Minimal (and targeted for) time interval between blocks. Must be an integer number of milliseconds. |
 | `neofs_ir__blockchain_magic` | Magic number which uniquely identifies Neo network. |
 | `neofs_ir__blockchain_seed_nodes` | Optional list of existing nodes to communicate with over Neo P2P protocol. By default, node runs as standalone |
