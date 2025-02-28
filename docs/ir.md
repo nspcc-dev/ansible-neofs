@@ -66,6 +66,7 @@
 | `neofs_ir__blockchain_tls_rpc_local_key` | Path to the :file:`secret/` directory on the Ansible Controller to get TLS key for RPC endpoint from. |
 | `neofs_ir__blockchain_p2p_address: ':` | Address for P2P endpoint. |
 | `neofs_ir__blockchain_p2p_port` | Port for P2P endpoint. |
+| `neofs_ir__blockchain_remove_untraceable_blocks` | Optional flag that denotes whether old blocks should be removed from cache and database. |
 | `neofs_ir__blockchain_p2p_allow` | List of IP addresses or subnets that are allowed to connect to the P2P endpoint over the network, configured on all hosts in the Ansible inventory. If no entries are specified, access through the firewall is disabled. |
 | `neofs_ir__blockchain_p2p_group_allow` | List of IP addresses or subnets that are allowed to connect to the P2P endpoint over the network, configured on hosts in a specific Ansible inventory group. If no entries are specified, access through the firewall is disabled. |
 | `neofs_ir__blockchain_p2p_host_allow` | List of IP addresses or subnets that are allowed to connect to the P2P endpoint over the network, configured on specific hosts in the Ansible inventory. If no entries are specified, access through the firewall is disabled. |
