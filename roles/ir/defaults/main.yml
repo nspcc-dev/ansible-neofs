@@ -64,6 +64,7 @@ neofs_ir__blockchain_database_path: '{{ neofs_ir__data_dir }}/fschain.bolt'
 neofs_ir__blockchain_time_per_block: '15s'
 neofs_ir__blockchain_magic: '1'
 neofs_ir__blockchain_seed_nodes: []
+neofs_ir__blockchain_remove_untraceable_blocks: false
 
 neofs_ir__blockchain_rpc_address: '::'
 neofs_ir__blockchain_rpc_port: 30333
@@ -194,6 +195,12 @@ neofs_ir__default_config:
               listen: '{{ neofs_ir__blockchain_tls_rpc_addresses }}'
               cert_file: '{{ neofs_ir__blockchain_tls_rpc_cert }}'
               key_file: '{{ neofs_ir__blockchain_tls_rpc_key }}'
+
+  - enabled: '{{ neofs_ir__blockchain_remove_untraceable_blocks }}'
+    options:
+      fschain:
+        consensus:
+          remove_untraceable_blocks: true
 
 neofs_ir__config: []
 neofs_ir__group_config: []
