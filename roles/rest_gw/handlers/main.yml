@@ -1,7 +1,7 @@
 ---
 
 - name: Restart NeoFS REST service
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: 'neofs-rest.service'
     state: 'restarted'
     enabled: yes
