@@ -1,7 +1,7 @@
 ---
 
 - name: Restart NeoFS S3 service
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: 'neofs-s3.service'
     state: 'restarted'
     enabled: yes
