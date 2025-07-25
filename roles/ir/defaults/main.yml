@@ -62,6 +62,7 @@ neofs_ir__pprof_host_allow: []
 
 neofs_ir__blockchain_database_path: '{{ neofs_ir__data_dir }}/fschain.bolt'
 neofs_ir__blockchain_time_per_block: '15s'
+neofs_ir__blockchain_max_time_per_block: '0s'
 neofs_ir__blockchain_magic: '1'
 neofs_ir__blockchain_seed_nodes: []
 neofs_ir__blockchain_remove_untraceable_blocks: false
@@ -105,6 +106,7 @@ neofs_ir__sidechain_config:
       type: boltdb
       path: '{{ neofs_ir__blockchain_database_path }}'
     time_per_block: '{{ neofs_ir__blockchain_time_per_block }}'
+    max_time_per_block: '{{ neofs_ir__blockchain_max_time_per_block }}'
     seed_nodes: '{{ neofs_ir__blockchain_seed_nodes }}'
     rpc:
       listen: '{{ neofs_ir__blockchain_rpc_addresses }}'
