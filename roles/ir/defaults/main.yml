@@ -135,9 +135,6 @@ neofs_ir__raw_config:
       amount: 400000000
     gas:
       balance_threshold: 100000000000
-  audit:
-    pdp:
-      max_sleep_interval: 500ms
   workers:
     netmap: 100
     balance: 100
