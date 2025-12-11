@@ -124,14 +124,10 @@ neofs_ir__raw_config:
     address: '{{ neofs_ir__wallet_address }}'
     password: '{{ neofs_ir__wallet_password }}'
 
-  fschain_autodeploy: True
-
   node:
     persistent_state:
       path: '{{ neofs_ir__data_dir }}/state'
 
-  fee:
-    main_chain: 25000000
   emit:
     storage:
       amount: 400000000
