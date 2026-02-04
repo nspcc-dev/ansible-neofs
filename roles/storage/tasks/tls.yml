@@ -11,6 +11,7 @@
   loop_control:
     label: '{{ item.tls_key_file }}'
   notify: [ 'Restart NeoFS Storage' ]
+  when: item.tls_key|length
 
 - name: Copy TLS cert
   ansible.builtin.copy:
@@ -23,3 +24,4 @@
   loop_control:
     label: '{{ item.tls_cert_file }}'
   notify: [ 'Restart NeoFS Storage' ]
+  when: item.tls_cert|length
