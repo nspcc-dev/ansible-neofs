@@ -138,8 +138,6 @@ neofs_storage__raw_config:
       address: '{{ neofs_storage__wallet_address }}'
       password: '{{ neofs_storage__wallet_password }}'
     addresses: '{{ neofs_storage__announce_addresses }}'
-    persistent_sessions:
-      path: '{{ neofs_storage__data_dir }}/sessions'
     persistent_state:
       path: '{{ neofs_storage__data_dir }}/state'
     relay: False
