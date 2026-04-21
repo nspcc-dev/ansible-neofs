@@ -89,7 +89,8 @@ neofs_storage__group_attributes: []
 neofs_storage__host_attributes: []
 
 neofs_storage__grpc_endpoints:
-  - address: '{{ neofs_storage__grpc_address }}'
+  - enabled: '{{ neofs_storage__grpc_port }}'
+    address: '{{ neofs_storage__grpc_address }}'
     port: '{{ neofs_storage__grpc_port }}'
     allow: '{{ neofs_storage__grpc_allow + neofs_storage__grpc_group_allow + neofs_storage__grpc_host_allow }}'
   - enabled: '{{ neofs_storage__tls_enabled }}'
