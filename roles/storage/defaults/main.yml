@@ -52,16 +52,20 @@ neofs_storage__announce_addresses: [ '{{ neofs_storage__grpc_address | ansible.u
 
 neofs_storage__grpc_address: '::'
 neofs_storage__grpc_port: 8080
-neofs_storage__grpcs_port: 8082
 neofs_storage__grpc_allow: []
 neofs_storage__grpc_group_allow: []
 neofs_storage__grpc_host_allow: []
 
-neofs_storage__tls_enabled: False
-neofs_storage__tls_cert: ''
-neofs_storage__tls_key: ''
-neofs_storage__tls_cert_file: '{{ neofs_storage__conf_dir }}/tls.cert'
-neofs_storage__tls_key_file: '{{ neofs_storage__conf_dir }}/tls.key'
+neofs_storage__tls_grpc_enabled: False
+neofs_storage__tls_grpc_address: '::'
+neofs_storage__tls_grpc_port: 8082
+neofs_storage__tls_grpc_allow: []
+neofs_storage__tls_grpc_group_allow: []
+neofs_storage__tls_grpc_host_allow: []
+neofs_storage__tls_grpc_cert: ''
+neofs_storage__tls_grpc_key: ''
+neofs_storage__tls_grpc_cert_file: '{{ neofs_storage__conf_dir }}/tls.cert'
+neofs_storage__tls_grpc_key_file: '{{ neofs_storage__conf_dir }}/tls.key'
 
 neofs_storage__control_enabled: True
 neofs_storage__control_address: 'localhost'
@@ -93,15 +97,15 @@ neofs_storage__grpc_endpoints:
     address: '{{ neofs_storage__grpc_address }}'
     port: '{{ neofs_storage__grpc_port }}'
     allow: '{{ neofs_storage__grpc_allow + neofs_storage__grpc_group_allow + neofs_storage__grpc_host_allow }}'
-  - enabled: '{{ neofs_storage__tls_enabled }}'
-    address: '{{ neofs_storage__grpc_address }}'
-    port: '{{ neofs_storage__grpcs_port }}'
-    allow: '{{ neofs_storage__grpc_allow + neofs_storage__grpc_group_allow + neofs_storage__grpc_host_allow }}'
+  - enabled: '{{ neofs_storage__tls_grpc_enabled }}'
+    address: '{{ neofs_storage__tls_grpc_address }}'
+    port: '{{ neofs_storage__tls_grpc_port }}'
+    allow: '{{ neofs_storage__tls_grpc_allow + neofs_storage__tls_grpc_group_allow + neofs_storage__tls_grpc_host_allow }}'
     tls: True
-    tls_cert:      '{{ neofs_storage__tls_cert }}'
-    tls_key:       '{{ neofs_storage__tls_key }}'
-    tls_cert_file: '{{ neofs_storage__tls_cert_file }}'
-    tls_key_file:  '{{ neofs_storage__tls_key_file }}'
+    tls_cert:      '{{ neofs_storage__tls_grpc_cert }}'
+    tls_key:       '{{ neofs_storage__tls_grpc_key }}'
+    tls_cert_file: '{{ neofs_storage__tls_grpc_cert_file }}'
+    tls_key_file:  '{{ neofs_storage__tls_grpc_key_file }}'
 
 neofs_storage__grpc: |
   {% for endpoint in neofs_storage__grpc_endpoints %}
@@ -110,15 +114,15 @@ neofs_storage__grpc: |
   {% if 'tls' in endpoint and endpoint.tls %}
     tls:
       enabled: True
-      certificate: {{ neofs_storage__tls_cert_file }}
-      key: {{ neofs_storage__tls_key_file }}
+      certificate: {{ neofs_storage__tls_grpc_cert_file }}
+      key: {{ neofs_storage__tls_grpc_key_file }}
   {% endif %}
   {% endif %}
   {% endfor %}
 
 neofs_storage__grpc_ferm_rules: |
   {% for endpoint in neofs_storage__grpc_endpoints %}
-  {% if 'enabled' not in endpoint or endpoint.enabled %}
+  {% if 'enabled' not in endpoint or ( endpoint.enabled and not ( endpoint.address == 'localhost' or '127.0.0.0/8'|ansible.utils.network_in_usable( endpoint.address ) or '::1/128'|ansible.utils.network_in_usable( endpoint.address ) ) ) %}
   - dport: [ '{{ endpoint.port }}' ]
   {% if endpoint.address not in ['0.0.0.0', '::0', '::'] %}
     daddr: [ '{{ endpoint.address }}' ]
