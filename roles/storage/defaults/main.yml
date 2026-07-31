@@ -150,9 +150,6 @@ neofs_storage__raw_config:
   control:
     grpc:
       endpoint: '{{ neofs_storage__control_address | ansible.utils.ipwrap }}:{{ neofs_storage__control_port }}'
-  object:
-    put:
-      pool_size_remote: 100
   apiclient:
     stream_timeout: 20s
   storage:
