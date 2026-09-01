@@ -36,7 +36,7 @@
 - ansible.builtin.include_tasks: wallet.yml
 
 - ansible.builtin.include_tasks: tls.yml
-  when: neofs_storage__grpc_endpoints | community.general.json_query( '[? tls && enabled ]' ) | length
+  when: neofs_storage__grpc_endpoints | community.general.json_query( '[? tls && enabled ]' ) | length > 0
 
 - ansible.builtin.include_tasks: binary.yml
   when: not neofs_storage__use_docker|bool and not neofs_storage__configure_only|bool
