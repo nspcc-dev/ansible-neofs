@@ -63,9 +63,7 @@ neofs_storage__tls_grpc_allow: []
 neofs_storage__tls_grpc_group_allow: []
 neofs_storage__tls_grpc_host_allow: []
 neofs_storage__tls_grpc_cert: ''
-neofs_storage__tls_grpc_key: ''
 neofs_storage__tls_grpc_cert_file: '{{ neofs_storage__conf_dir }}/tls.cert'
-neofs_storage__tls_grpc_key_file: '{{ neofs_storage__conf_dir }}/tls.key'
 
 neofs_storage__control_enabled: True
 neofs_storage__control_address: 'localhost'
@@ -103,9 +101,7 @@ neofs_storage__grpc_endpoints:
     allow: '{{ neofs_storage__tls_grpc_allow + neofs_storage__tls_grpc_group_allow + neofs_storage__tls_grpc_host_allow }}'
     tls: True
     tls_cert:      '{{ neofs_storage__tls_grpc_cert }}'
-    tls_key:       '{{ neofs_storage__tls_grpc_key }}'
     tls_cert_file: '{{ neofs_storage__tls_grpc_cert_file }}'
-    tls_key_file:  '{{ neofs_storage__tls_grpc_key_file }}'
 
 neofs_storage__grpc: |
   {% for endpoint in neofs_storage__grpc_endpoints %}
@@ -115,7 +111,6 @@ neofs_storage__grpc: |
     tls:
       enabled: True
       certificate: {{ neofs_storage__tls_grpc_cert_file }}
-      key: {{ neofs_storage__tls_grpc_key_file }}
   {% endif %}
   {% endif %}
   {% endfor %}
