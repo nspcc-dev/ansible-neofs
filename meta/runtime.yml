@@ -1,0 +1,5 @@
+---
+
+# The version of ansible-core required to use this collection
+# Ref: https://docs.ansible.com/ansible/latest/dev_guide/developing_collections_structure.html#meta-directory-and-runtime-yml
+requires_ansible: '>=2.19.0'
