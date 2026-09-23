@@ -80,8 +80,7 @@ neofs_rest__raw_config:
     rebalance-timer: '{{ neofs_rest__rebalance_timer }}'
     error-threshold: '{{ neofs_rest__pool_error_threshold }}'
     peers:
-      0:
-        address: 'localhost:8080'
+      - address: 'localhost:8080'
         priority: 1
         weight: 1
 
